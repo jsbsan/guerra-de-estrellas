@@ -2,6 +2,7 @@
 
 'en pruebas
 'dospruebas
+'version 2 prueba
 Public raton As ClassPosicion
 'variables globales...
 Public dibuja As String 'comando de dibujo
