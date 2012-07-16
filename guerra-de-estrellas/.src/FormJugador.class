@@ -1,0 +1,68 @@
+' Gambas class file
+
+Public opcion As ClassOpcion
+
+Public Sub Form_Open()
+
+    Me.Center
+    opcion.texto = ""
+
+End
+
+Public Sub ToolButtonTutos_Click()
+
+    opcion.texto = "tuto1.MapaEstelar.xml"
+    Me.Close()
+
+End
+
+Public Sub ToolButtonTutos2_Click()
+
+    opcion.texto = "tuto2.MapaEstelar.xml"
+    Me.Close()
+
+End
+
+Public Sub ToolButtonTutos3_Click()
+
+    opcion.texto = "tuto3.MapaEstelar.xml"
+    Me.Close()
+
+End
+
+Public Sub ToolButtonCampana_Click()
+    'abrir en la carpeta "campañas" del juego
+
+    ToolButtonCampana2_Click(User.home & "/guerraestrellas/campaign/")
+
+End
+
+Public Sub ToolButtonCampana2_Click(Optional campaign As String)
+
+    Dim arr_cadenas As String[]
+    Dim a As Integer
+    Dim b As Integer
+
+    If campaign <> "" Then Dialog.Path = User.home & "/guerraestrellas/campaign/"
+    Dialog.Title = "Seleccione un archivo de juego"
+    Dialog.Filter = ["*.MapaEstelar.xml", "Datos de Mapa Estelardiagrama"]
+
+    If Not Dialog.OpenFile() Then
+        opcion.texto = Dialog.Path
+        Me.close
+    Endif
+
+End
+
+Public Sub Form_Close()
+
+    If opcion.texto = "" Then Me.Close
+
+End
+
+Public Sub ToolButtonTutos4_Click()
+
+    opcion.texto = "tuto4.MapaEstelar.xml"
+    Me.Close()
+
+End

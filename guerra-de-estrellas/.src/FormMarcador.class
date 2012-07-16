@@ -1,0 +1,91 @@
+' Gambas class file
+
+Public barras As New ClassBarra[]
+
+Public Sub Form_Open()
+
+    Dim barrastemp As Classbarra
+    Dim a As Integer
+    Dim planetatemp As ClassPlaneta
+
+    Me.caption = "Marcador"
+
+    For a = 0 To 5 ' 1 (blanco),2(azul),3(marron),4(Amarillo),5(rojo),6(verde)
+        barrastemp = New ClassBarra(a + 1)
+        barras.Add(barrastemp)
+    Next
+
+    For Each planetatemp In FMain.partida.mapa.array_planetas
+     Try barras[planetatemp.organizacion - 1].valor = 0.01
+      Try barras[planetatemp.organizacion - 1].escribe = True
+    Next
+
+    For a = 0 To 5
+        If barras[a].valor = 0 Then barras[a].escribe = False
+    Next
+
+End
+
+Public Sub dibujar()
+
+    Dim largobarra, colorelegido As Integer
+    Dim valormaximo As Integer
+    Dim tiempo As Float
+    Dim planetatemp As ClassPlaneta
+    Dim a As Integer
+    Dim y As Integer = 60
+    Dim ruta As String
+    'obtengo puntacion de los planetas..
+    valormaximo = 0
+
+    For a = 0 To 5
+        barras[a].valor = 0
+    Next
+    'calculo valor de cada planeta y lo añado a la barra correspondiente
+    For Each planetatemp In FMain.partida.mapa.array_planetas
+     Try barras[planetatemp.organizacion - 1].valor += planetatemp.tipo * 100 + planetatemp.numeroNaves + 0
+    Next
+
+    'calculo el maximo
+    For a = 0 To 5
+        valormaximo = Max(barras[a].valor, valormaximo)
+    Next
+
+    Draw.Begin(DrawingAreaMarcador)
+    Draw.Picture(Picture[FMain.fondoMarcador], 0, 0)
+    tiempo = DateDiff(FMain.tiempoinicial, Now, gb.Second)
+    Draw.Foreground = Color.red
+    Draw.Font.Size = 16
+    Draw.Font.Italic = True
+    Draw.Text("Time: " & tiempo, 20, 40)
+    Y = 60
+    'DIBUJO BARRAS
+
+    For A = 0 To 5
+
+        y += 25
+        '    If barras[a].valor > 0 Then
+        colorelegido = Choose(a + 1, Color.white, Color.Blue, Color.Orange, Color.Yellow, Color.Red, Color.Green)
+        Draw.FillColor = colorelegido
+        largobarra = barras[a].regla(valormaximo, 80)
+        Draw.FillRect(45, y + 5, largobarra, 15)
+        Draw.Foreground = colorelegido
+        Draw.FillStyle = Fill.Solid
+        Draw.Circle(45, y + 12.5, 7.5)
+        Draw.Circle(45 + largobarra, y + 12.5, 7.5)
+        Draw.FillColor = Color.Black
+        '  Else
+        '       Draw.FillColor = Color.Black
+        ' Draw.FillRect(45, y + 5, 80, 15)
+
+        '   Endif
+        ruta = User.home & "/guerraestrellas/nave/"
+        ruta &= Choose(a + 1, "32x32shuttle", "32x32Azul", "32x32Marron", "32x32Amarillo", "32x32Rojo", "32x32Verde")
+        ruta &= ".png"
+
+        Draw.Picture(Picture[ruta], 0, y)
+
+    Next
+    Draw.End
+
+End

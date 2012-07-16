@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<GuerraDeEstrellas version="0.1">
+ <Planetas>
+  <Indice>0</Indice>
+  <Pos.x>268</Pos.x>
+  <Pos.y>223</Pos.y>
+  <Organizacion>1</Organizacion>
+  <tipo>3</tipo>
+  <numeroNaves>18</numeroNaves>
+ </Planetas>
+ <Planetas>
+  <Indice>1</Indice>
+  <Pos.x>520</Pos.x>
+  <Pos.y>196</Pos.y>
+  <Organizacion>2</Organizacion>
+  <tipo>1</tipo>
+  <numeroNaves>2</numeroNaves>
+ </Planetas>
+ <Conexiones>
+  <ptoAindice>0</ptoAindice>
+  <orgA>1</orgA>
+  <ptoBindice>1</ptoBindice>
+  <orgB>2</orgB>
+ </Conexiones>
+ <TextoDescriptivo>
+  <Texto>&lt;h1&gt;Tutorial 1&lt;/h1&gt;
+Tienes que hacer click en tu planeta (el blanco) y luego al planeta azul, para lanzar tus naves contra el planeta y conquistarlo...&lt;br&gt;&lt;br&gt;
+You have to click on your planet (white) and then click on the blue planet, to launch your ships against the planet and conquer it...
+</Texto>
+ </TextoDescriptivo>
+</GuerraDeEstrellas>

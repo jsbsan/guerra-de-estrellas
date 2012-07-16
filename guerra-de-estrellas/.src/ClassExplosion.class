@@ -1,0 +1,28 @@
+' Gambas class file
+
+Public coorX As Integer
+Public coorY As Integer
+Public contador As Integer
+Private maximos_sprites As Integer
+
+Public activada As Boolean
+
+Public Sub nueva(x As Integer, y As Integer, maximo As Integer)
+
+    activada = True
+    coorx = x
+    coory = y
+    contador = -1
+    maximos_sprites = maximo
+
+End
+
+Public Sub cuenta()
+
+    contador += 1
+    If contador >= maximos_sprites Then
+        contador -= 1
+        activada = False
+    Endif
+
+End

@@ -1,0 +1,293 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2002-11-01 04:27+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .project:2
+msgid "007:\nIncluidas traducciones: Ingles, Frances, Aleman e Italiano \n(por el google traduce...)\nAl archivo eje.bin, se le dan los permisos de ejecucion automaticamente.\nPara facilitar la realizacion de mapas se ha añadido un boton para generar  una rejilla\nCorregido problema de borrado de conexiones. (no las encontraba)\n\n0.0.6\nError cuando el tutorial se termina, fallaba la edicion de mapas...\nAñadido \"compartir mapas\", con ejecutable eje.bin... (hay que darle permisos de ejecucion)\n\n\n0.0.5\nCorregido el error de hacer click en pantalla mientras no se jugaba.\nCorregido cuando no encontraba el planeta al hacer click.\nCorregido \"naves\" que no morian al pasar de un tutorial a otro.\n\nRevision 0.0.1\nInteligencia Artificial 2\nAñadido guardar y abrir, en formato XML\nAñadido 4 tutoriales"
+msgstr ""
+
+#: FMain.form:206
+msgid "Abre Mapa"
+msgstr "Carte Ouvert"
+
+#: FMain.form:137
+msgid "Abrir Partida"
+msgstr "Ouvrir le partie"
+
+#: FormPlaneta.form:31 FormTextoDescriptivo.form:32
+msgid "Aceptar"
+msgstr "Accepter"
+
+#: FMain.class:1288
+msgid "Activo rejilla"
+msgstr "Grille active"
+
+#: FMain.form:82
+msgid "A jugar..."
+msgstr "Jouer"
+
+#: FMain.form:234
+msgid "Anula o Activa el Sonido"
+msgstr "Remplace ou permet son"
+
+#: FormPresentacion.form:33
+msgid "Autor: Julio Sanchez  Berro. Version  Beta X.X.X. Licencia GPL 3.0"
+msgstr "Auteur: Julio Sanchez Berro. Version Beta X.X.X. Licence GPL 3.0"
+
+#: FMain.form:178
+msgid "Borra"
+msgstr "Effacer"
+
+#: FMain.class:1150
+msgid "Borrando elementos del mapa, puedes borrar planetas o conexiones"
+msgstr "Suppression d'éléments de la carte, vous pouvez supprimer des planètes ou des connexions"
+
+#: FormJugador.form:47
+msgid "Campañas"
+msgstr "Campagnes"
+
+#: FMain.class:1318
+msgid "Cancelada operacion"
+msgstr "Opération annulée"
+
+#: FMain.form:190
+msgid "Cancela Operacion"
+msgstr "Opération d'annulation"
+
+#: FormPlaneta.form:38 FormPreferencias.form:143 FormTextoDescriptivo.form:25
+msgid "Cancelar"
+msgstr "Annuler"
+
+#: FMain.form:130
+msgid "Compartir un mapa con la comunidad"
+msgstr "Partegez une carte evec la communauté"
+
+#: FMain.class:139
+msgid " Creando Mapa: Puede crear planetas y rutas "
+msgstr "Création de carte : vous pouvez créer des routes et des planètes"
+
+#: FMain.form:166
+msgid "Crear Planeta"
+msgstr "Créer Planéte"
+
+#: FMain.form:172
+msgid "Crear Ruta"
+msgstr "Créer une route"
+
+#: FMain.class:1279
+msgid "Desactivo rejilla"
+msgstr "Je désactive la grille"
+
+#: FMain.form:184
+msgid "Edita"
+msgstr "Éditer"
+
+#: FMain.class:975
+msgid "Editando mapa, puedes añadir planetas y conexiones"
+msgstr "Montage à la carte, vous pouvez ajouter des connexions et des planètes"
+
+#: FMain.form:106
+msgid "Editor de Mapas"
+msgstr "Map Editor"
+
+#: FMain.class:212
+msgid "Elige el planeta destino de tus naves..."
+msgstr "Vous choisissez la destination de votre planète de navires"
+
+#: FormPreferencias.form:45
+msgid "En esta pantalla, configuramos el programa"
+msgstr "Sur cet écran, configurer le programme"
+
+#: FormPreferencias.form:128
+msgid "Estrellas"
+msgstr "Etoiles"
+
+#: FormPreferencias.form:86
+msgid "Explosiones (activarlas o que no se vean)"
+msgstr "Explisiones (on ou off)"
+
+#: FMain.form:222
+msgid "Fin del editor"
+msgstr "Fin de l'éditeur"
+
+#: FMain.class:591
+msgid "Fin del juego..., elige otro nivel o create un mapa para jugar!!!"
+msgstr "Fin du jeu, choisissez un autre niveau ou créer une carte à jouer !"
+
+#: FMain.form:88
+msgid "Fin Juego "
+msgstr "Fin de partie"
+
+#: FormPreferencias.form:117
+msgid "Fondo"
+msgstr "Fond"
+
+#: FMain.form:212
+msgid "Guarda Mapa"
+msgstr "Montre Mapa"
+
+#: FMain.form:69
+msgid "Guardar Como..."
+msgstr "Sauvegarder comme"
+
+#: FMain.form:76
+msgid "Guardar Partida"
+msgstr "Sauvegarder le partie"
+
+#: .project:1
+msgid "GuerraEntreEstrellas2"
+msgstr "La guerre entre estrelals"
+
+#: FormPreferencias.form:32
+msgid "<h1>Preferencias</h1>"
+msgstr "<h1>Préférences</h1>"
+
+#: FMain.class:983
+msgid "Haga click en una planeta  para editarlo (las conexiones sole se pueden borrar)"
+msgstr "Cliquez sur une planète de le modifier (connexions peuvent seulement être supprimées)"
+
+#: FMain.form:124
+msgid "Informacion"
+msgstr "Informations"
+
+#: FMain.form:241
+msgid "Inicia el juego, si lo has parado"
+msgstr "Démarrez le jeu, si vous avez arrêté"
+
+#: FMain.class:527
+msgid "jugando...."
+msgstr "Jouer..."
+
+#: FormJugador.form:19
+msgid "Jugar Tutorial 1"
+msgstr "Jouez tutoriel 1"
+
+#: FormJugador.form:26
+msgid "Jugar Tutorial 2"
+msgstr "Jouez tutoriel 2"
+
+#: FormJugador.form:33
+msgid "Jugar Tutorial 3"
+msgstr "Jouez tutoriel 3"
+
+#: FormJugador.form:40
+msgid "Jugar Tutorial 4"
+msgstr "Jouez tutoriel 4"
+
+#: FMain.class:305
+msgid "Mensaje: Esperando nueva orden..."
+msgstr "Message : En attente d'un nouvel ordre..."
+
+#: FMain.form:51
+msgid "Mensajes: Pulse F1 para abrir ayuda online..."
+msgstr "Messages: Appuyez sur F1 pour l`aide en ligne"
+
+#: FormTextoDescriptivo.form:40
+msgid "Muestra el texto en formato etiqueta html"
+msgstr "Affiche le texte en html"
+
+#: FormPlaneta.form:46
+msgid "Neutro"
+msgstr "Neutro"
+
+#: FMain.class:149
+msgid " No puedo dibujar un planeta, mientres que este dibujando conexiones.."
+msgstr "Je ne peux pas tirer une planète, mientres que ce dessin de connexions. (routes)"
+
+#: FMain.form:62
+msgid "Nueva Partida"
+msgstr "Nouveau jeu"
+
+#: FMain.form:200
+msgid "Nuevo Mapa"
+msgstr "Nouvelle carte"
+
+#: FormPlaneta.form:19
+msgid "Organizacion:"
+msgstr "Organisation"
+
+#: FMain.form:247
+msgid "Parada del juego"
+msgstr "Arrêt de jeu"
+
+#: FormJugador.form:55
+msgid "Partidas Guardadas"
+msgstr "Favoris"
+
+#: FormPlaneta.form:52
+msgid "Pequeño"
+msgstr "Pequeño"
+
+#: FMain.class:354
+msgid "Planeta no encontrado, pruebe otra vez"
+msgstr "Planète ne pas trouvée, essayez à nouveau"
+
+#: FormPreferencias.form:55
+msgid "Planetas"
+msgstr "Planétes"
+
+#: FormPreferencias.form:122
+msgid "Por defecto"
+msgstr "Par défaut"
+
+#: FMain.form:118
+msgid "Preferencias"
+msgstr "Preferencies"
+
+#: FMain.class:156
+msgid " Pulse donde ira el planeta..."
+msgstr "Presse où ira de la planète..."
+
+#: FMain.class:367
+msgid " Pulse el 1º planeta para la conexion..."
+msgstr "Appuyez sur la première planète de connexion (voie)"
+
+#: FMain.class:356
+msgid "Pulse el 2º planeta"
+msgstr "Appuyez sur la deuxième planète"
+
+#: FormPresentacion.form:28
+msgid "Pulse para visitar pagina de publicidad y empezar el juego"
+msgstr "Cliquez ici pour visiter le site Web et commencer le jeu"
+
+#: FormPresentacion.form:21
+msgid "Realizado en gambas3.1.1"
+msgstr "Made in Gambas 3.1.1."
+
+#: FormPreferencias.form:134
+msgid "Rejilla:"
+msgstr "Grille:"
+
+#: FMain.form:149
+msgid "Rejilla: Facilita la realizacion de Tableros"
+msgstr "Grille: Fournit la realization des commissions"
+
+#: FormPreferencias.form:38
+msgid "Salir"
+msgstr "Quitter"
+
+#: FormPlaneta.form:25
+msgid "Tamaño:"
+msgstr "Taille"
+
+#: FMain.form:160
+msgid "Texto explicativo para el mapa"
+msgstr "Texte explicaf a la carte"
+
+#: FormPlaneta.form:57
+msgid "Tropas Iniciales:"
+msgstr "Troupes ont comence:"
+
+#: FormTextoDescriptivo.form:39
+msgid "Visualizar"
+msgstr "Affichage:"
+

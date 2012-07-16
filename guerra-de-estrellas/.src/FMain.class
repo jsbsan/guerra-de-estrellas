@@ -1,0 +1,1373 @@
+' Gambas class file
+
+'en pruebas
+'dospruebas
+Public raton As ClassPosicion
+'variables globales...
+Public dibuja As String 'comando de dibujo
+'Public mapa As ClassMap 'mapa
+Public partida As ClassPartida
+Public fondo As String
+Public fondoMarcador As String
+Public recorrido As New Picture[] 'para el desarrollo de las explosiones
+Public colorfondorectangulo As Integer
+
+'resultado de las busqueda de planetas
+Public ResBus As ClassResultadoBusqueda
+'planeta de salida de las naves del jugador
+Public planetaJugandoOrigen As ClassPlaneta
+Public dibujaelegido As Boolean
+Public modo As String ' modo edicion: para crear y editar planos / modo juego: para jugar
+Public eleccion As String
+'sonidos----
+Public rutasonidoExp As String
+Public despeguenave As String
+Public rutasonidopeligro As String
+Public sonidoganador As String
+Public sonidoperdedor As String
+Public rutasonidobombardeo As String
+Public sonidoactivado As Boolean
+'temporales
+Public conexiontemp As ClassConexion
+Public tiempoinicial As Date
+
+'configuracion vistas...
+Public modorellenoplaneta As String = "simple"
+Public controlexplosiones As Boolean
+
+'regilla
+Public posrejilla As ClassPosicion
+Public Activada_Rejilla As Boolean = False
+Public valor_rejilla As Integer = 25
+Public fondoBN As String
+Public fondoanterior As String '' variable que contiene el fondo anterior a la activacion de la rejilla
+Public rutaobjetivo As String 'ruta del objetivo
+
+Public Sub _new()
+
+End
+
+Public Sub Form_Open()
+
+    Dim comando As String
+
+    raton = New ClassPosicion
+    FormPresentacion.Showdialog()
+    Me.Center
+
+    ResBus = New ClassResultadoBusqueda
+
+    'se ven las explosiones por defecto
+    controlexplosiones = True
+
+    'borrado de antiguos tutoriales y de imagenes de fondo
+    comando = User.home & "/guerraestrellas/tuto"
+    Exec ["rm", "-dfr", comando]
+    Wait 0.1
+    comando = User.home & "/guerraestrellas/imagenes"
+    Exec ["rm", "-dfr", comando]
+    Wait 0.1
+
+    recorrido = divideImagen("explosion.png", 5, 5)
+    '
+    'creo carpetas y ficheros desde el programa al directorio: user.home/guerrestrellas
+    '
+
+    Try Mkdir User.home & "/guerraestrellas"
+    'borro antiguos tutoriales...
+
+    Try Mkdir User.home & "/guerraestrellas/tuto/"
+    Try Mkdir User.home & "/guerraestrellas/campaign"
+    'borro imagenes anteriores... (fondos)
+
+    Try Mkdir User.home & "/guerraestrellas/imagenes"
+    Try Mkdir User.home & "/guerraestrellas/planetas"
+    Try Mkdir User.home & "/guerraestrellas/planetasR"
+    Try Mkdir User.home & "/guerraestrellas/temporal"
+    Try Mkdir User.home & "/guerraestrellas/nave"
+    ModuleCopiaDirectorios.copia_dir("nave", User.home & "/guerraestrellas/nave")
+
+    'programa encargado de subir archivos al servidor !!!
+    Try Copy "eje.bin" To User.home & "/guerraestrellas/temporal/eje.bin"
+    comando = User.home & "/guerraestrellas/temporal/"
+    'doy permisos de ejecucion... (solo gambas 3.1)
+    Chmod User.home & "/guerraestrellas/temporal/eje.bin" To "rwxrwxrwx"
+    Try Copy "explosion.wav" To User.home & "/guerraestrellas/explosion.wav"
+    Try Copy "salida.mp3" To User.home & "/guerraestrellas/salida.mp3"
+    Try Copy "peligro.mp3" To User.home & "/guerraestrellas/peligro.mp3"
+    Try Copy "perdiste.mp3" To User.home & "/guerraestrellas/perdiste.mp3"
+    Try Copy "ganaste.mp3" To User.home & "/guerraestrellas/ganaste.mp3"
+    Try Copy "bombardeo.mp3" To User.home & "/guerraestrellas/bombardeo.mp3"
+
+    'fondos
+    Try Copy "FondoGris.jpg" To User.home & "/guerraestrellas/imagenes/FondoGris.jpg"
+
+    Try Copy "FondoEstrellas.jpg" To User.home & "/guerraestrellas/imagenes/FondoEstrellas.jpg"
+    Try Copy "FondoBN.png" To User.home & "/guerraestrellas/imagenes/FondoBN.png"
+    Try Copy "objetivo.png" To User.home & "/guerraestrellas/imagenes/objetivo.png"
+    fondoBN = User.home & "/guerraestrellas/imagenes/FondoBN.png"
+
+    Try Copy "marcador.png" To User.home & "/guerraestrellas/imagenes/marcador.png"
+
+    Try Copy "tuto1.MapaEstelar.xml" To User.home & "/guerraestrellas/tuto/tuto1.MapaEstelar.xml"
+    Try Copy "tuto2.MapaEstelar.xml" To User.home & "/guerraestrellas/tuto/tuto2.MapaEstelar.xml"
+    Try Copy "tuto3.MapaEstelar.xml" To User.home & "/guerraestrellas/tuto/tuto3.MapaEstelar.xml"
+    Try Copy "tuto4.MapaEstelar.xml" To User.home & "/guerraestrellas/tuto/tuto4.MapaEstelar.xml"
+
+    ModuleCopiaDirectorios.copia_dir("planetas", User.home & "/guerraestrellas/planetas")
+    ModuleCopiaDirectorios.copia_dir("planetasR", User.home & "/guerraestrellas/planetasR")
+
+    'se ven las explosiones por defecto
+    controlexplosiones = True
+    rutasonidoExp = User.home & "/guerraestrellas/explosion.wav"
+    despeguenave = User.Home & "/guerraestrellas/salida.mp3"
+    rutasonidopeligro = User.home & "/guerraestrellas/peligro.mp3"
+    sonidoganador = User.home & "/guerraestrellas/ganaste.mp3"
+    sonidoperdedor = User.home & "/guerraestrellas/ganaste.mp3"
+    rutasonidobombardeo = User.home & "/guerraestrellas/bombardeo.mp3"
+    fondo = User.home & "/guerraestrellas/imagenes/FondoGris.jpg"
+    fondoMarcador = User.home & "/guerraestrellas/imagenes/marcador.png"
+    sonidoactivado = True
+    partida = New ClassPartida
+    rutaobjetivo = User.home & "/guerraestrellas/imagenes/objetivo.png"
+    draw.Begin(DrawingArea1)
+    draw.Picture(picture[fondo], 0, 0)
+    draw.End
+
+End
+
+Public Sub ToolButtonEditor_Click()
+
+    ToolButtonNuevo.enabled = False
+    ToolButtonAbrir.enabled = False
+    ToolButtonGuarda.enabled = False
+    ToolButtonGuardaComo.enabled = False
+    ToolButtonFin.enabled = False
+    HBoxEditorMapa.visible = True
+
+    TextLabelMensaje.text = (" Creando Mapa: Puede crear planetas y rutas ")
+    modo = "crear" 'estoy editando planetas
+
+    partida = New ClassPartida
+
+End
+
+Public Sub ToolButtonPlaneta_Click()
+
+    If dibuja = "conexion1" Or dibuja = "conexion2" Then
+        TextLabelMensaje.text = (" No puedo dibujar un planeta, mientres que este dibujando conexiones..")
+
+        Return
+    Endif
+
+    If ToolButtonPlaneta.Enabled = True Then
+
+        TextLabelMensaje.text = (" Pulse donde ira el planeta...")
+        dibuja = "planeta"
+    Endif
+
+End
+
+Public Sub DrawingArea1_MouseUp()
+
+    Dim a As Integer
+    Dim planetaTempA As Classplaneta
+
+    Dim navetemp As ClassNave
+    Dim f As Formplaneta
+    Dim ht As ClassTile
+    Dim array_texto As New String[]
+
+    Select Case modo
+        Case "jugando"
+            'dos click:
+            'el 1º para elegir el planeta de salida (tiene que ser de nuestra organizacion)
+            'el 2º debe de cumplir que tenga conexion con el primero
+            If eleccion = "2" Then
+                ResBus = buscarplaneta(partida.mapa, Mouse.x, Mouse.y)
+                If ResBus.resultado = False Then Return
+
+                planetatempA = ResBus.objeto
+
+                If planetaJugandoOrigen <> planetatempA Then
+
+                    If buscarConexionPlanetaPlaneta(partida.mapa, Mouse.x, Mouse.y, planetaJugandoOrigen, planetatempA) Then
+                        'lanzar nave..
+                        navetemp = New ClassNave(planetaJugandoOrigen.pos, planetaTempA.pos, planetaJugandoOrigen.organizacion, planetaJugandoOrigen.numeronaves - 1, planetaJugandoOrigen.indice, planetaTempA.indice)
+                        planetaJugandoOrigen.numeronaves = 1
+                        partida.naves.Add(navetemp)
+                        HacerSonido(despeguenave)
+
+                    Endif
+                    eleccion = ""
+                    dibujaelegido = False
+                    TextLabelMensaje.text = ""
+                Endif
+            Else
+                '
+                If eleccion = "" Then
+                    'primera eleccion
+                    ResBus = buscarplaneta(partida.mapa, Mouse.x, Mouse.y)
+                    If ResBus.resultado = False Then Return
+
+                    planetatempA = ResBus.objeto
+
+                    If planetaTempA.organizacion = partida.jugador.organizacion Then
+                        'es de los nuestros
+
+                        eleccion = "2"
+                        dibujaelegido = True
+                        planetaJugandoOrigen = planetaTempA
+                        dibujarMapa(partida.mapa)
+                        TextLabelMensaje.text = ("Elige el planeta destino de tus naves...")
+                    Endif
+                Endif
+            Endif
+
+        Case "borrar"
+            ResBus = buscarplaneta(partida.mapa, Mouse.x, Mouse.y)
+            If ResBus.resultado = False Then
+
+                conexiontemp = buscarConexion(partida.mapa, Mouse.x, mouse.y)
+                If conexiontemp <> Null Then
+                    partida.mapa.array_conexion.remove(partida.mapa.array_conexion.Find(conexiontemp))
+                    'redibujo...
+                    'dibujar la conexion
+                    dibujarMapa(partida.mapa)
+                    'hago click en el boton de editar, para pasar al modo
+                    ToolButtonBorra_Click()
+                Endif
+
+                Return
+
+            Endif
+
+            planetatempA = ResBus.objeto
+
+            'compruebo que no tenga conexiones... si las tiene no puedo borrarlo hasta que se borra la conexion
+            If buscarConexionPlaneta(partida.mapa, Mouse.x, Mouse.y, planetatempA) = False Then
+                'como  no hay conexiones... se puede borrar
+                partida.mapa.array_planetas.remove(partida.mapa.array_planetas.Find(planetaTempA))
+                'redibujo...
+                'dibujar el planeta
+                dibujarMapa(partida.mapa)
+                'hago click en el boton de editar, para pasar al modo
+                ToolButtonBorra_Click()
+            Endif
+
+        Case "editar"
+            'para editar datos de planetas o conexiones
+            ResBus = buscarplaneta(partida.mapa, Mouse.x, Mouse.y)
+            If ResBus.resultado = False Then Return
+
+            planetatempA = ResBus.objeto
+
+            'edito planeta
+            f = New FormPlaneta
+            planetaTempA.cambio = False
+            f.planetaTemp = planetaTempA
+            f.ShowDialog()
+            If planetaTempA.cambio = True Then
+                'guardo cambios del planeta
+                '
+                partida.mapa.array_planetas[partida.mapa.array_planetas.Find(planetaTempA)] = planetaTempA
+                'redibujo...
+                'dibujar el planeta
+                dibujarMapa(partida.mapa)
+                'hago click en el boton de editar, para pasar al modo
+                ToolButtonEdita_Click()
+
+            Endif
+
+        Case "crear"
+            If dibuja = "planeta" Then
+                'creo un nuevo objeto de la clase planeta
+
+                planetatempA = New ClassPlaneta
+                posrejilla = rejilla(mouse.x, mouse.y, Activada_Rejilla)
+                planetaTempA.colocar(posrejilla.X, posrejilla.y)
+
+                f = New FormPlaneta
+
+                f.planetaTemp = planetaTempA
+                f.ShowDialog()
+                If planetatempA.organizacion <> 0 Then
+                    'añadir al array de planetaexistentes
+                    'dibujar el planeta
+                    'draw.Begin(DrawingArea1)
+                    'ht = planetatempA.dibujaplaneta()
+                    'draw.Picture(picture[ht.ruta], ht.pos.x, ht.pos.y)
+                    'array_texto = Split(ht.tag, "|")
+
+                    'draw.FillRect(ht.pos.x, ht.pos.y - Val(array_texto[1]), Draw.TextWidth(array_texto[0]), draw.TextHeight(array_texto[0]), Color.DarkBlue)
+                    'draw.Foreground = Color.white
+                    'draw.Text(array_texto[0], ht.pos.x, ht.pos.y - Val(array_texto[1]))
+                    'draw.end
+                    'dibujo mapa
+
+                    '---añado a indice
+                    planetaTempA.indice = partida.mapa.array_planetas.count
+                    partida.mapa.array_planetas.Add(planetaTempA)
+                    dibujarMapa(partida.mapa)
+                Endif
+                dibuja = ""
+                ToolButtonPlaneta.Enabled = True
+                TextLabelMensaje.text = ("Mensaje: Esperando nueva orden...")
+            Endif
+
+            If dibuja = "conexion2" Then
+                'averigua si esta dentro de un planeta...
+                a = -1
+                While (a < partida.mapa.array_planetas.count - 1)
+                    a += 1
+                    planetatempA = partida.mapa.array_planetas[a].dentro(Mouse.x, Mouse.y)
+                    If planetatempA <> Null Then ' And conexiontemp.ptoA <> planetaTempA Then
+                        'si es asi asigna al primer punto el planeta elegido
+
+                        conexiontemp.ptoB = planetatempA
+                        conexiontemp.ptoBindice = planetaTempA.indice
+                        conexiontemp.orgB = planetaTempA.organizacion
+                        ' conexiontemp.dibuja(DrawingArea1)
+
+                        partida.mapa.array_conexion.Add(conexiontemp)
+                        dibuja = ""
+                        a = partida.mapa.array_planetas.count + 10
+                        TextLabelMensaje.text = ("Mensaje: Esperando nueva orden...")
+                        dibujarMapa(partida.mapa)
+                    Endif
+                Wend
+
+                'si es asi asigna al 2 punto el planeta elegido
+                dibuja = ""
+                'sino lanza un error de "planeta no encontrado"
+
+            Endif
+
+            If dibuja = "conexion1" Then
+                'averigua si esta dentro de un planeta...
+                a = -1
+                While (a < partida.mapa.array_planetas.count - 1)
+                    a += 1
+                    planetatempA = partida.mapa.array_planetas[a].dentro(Mouse.x, Mouse.y)
+                    If planetatempA <> Null Then
+                        'si es asi asigna al primer punto el planeta elegido
+                        conexiontemp = New ClassConexion
+                        conexiontemp.ptoA = planetatempA
+                        conexiontemp.ptoAindice = planetaTempA.indice
+                        conexiontemp.orgA = planetaTempA.organizacion
+                        dibuja = "conexion2"
+                        a = partida.mapa.array_planetas.count + 10
+                    Endif
+                Wend
+                'sino lanza un error de "planeta no encontrado"
+                If dibuja = "conexion1" Then
+                    TextLabelMensaje.text = ("Planeta no encontrado, pruebe otra vez")
+                Else
+                    TextLabelMensaje.text = ("Pulse el 2º planeta")
+                Endif
+            Endif
+
+    End Select
+
+End
+
+Public Sub ToolButtonConexion_Click()
+
+    If ToolButtonConexion.Enabled = True Then
+        TextLabelMensaje.text = (" Pulse el 1º planeta para la conexion...")
+        dibuja = "conexion1"
+    Endif
+
+End
+
+Public Sub ToolButtonSalva_Click()
+
+    Dim guardarenXml As ClassGuardaXML
+    Dim lineas As String
+    Dim destino As String
+    Dim numArchivo As Integer
+    Dim a As Integer
+    Dim numero As Integer
+    Dim caracter_separador As String = "\n"
+
+    Dialog.Title = "Escriba  un nombre de archivo para guardar el mapa"
+
+    Dialog.Filter = ["*.MapaEstelar.xml", "Datos de Mapa Estelardiagrama"]
+
+    If Not Dialog.SaveFile() Then
+        If Right$(Dialog.Path, Len(".MapaEstelar.xml")) <> ".MapaEstelar.xml" Then
+            destino = Dialog.Path & ".MapaEstelar.xml"
+        Else
+            destino = Dialog.Path
+        End If
+
+        guardarenXml = New ClassGuardaXML
+
+        guardarenXml.guardar(partida, destino)
+
+    Endif
+
+End
+
+Public Sub ToolButtonAbre_Click(Optional nombrefichero As String)
+
+    Dim abrexml As ClassAbreXML
+    Dim c As String
+    Dim arra_cadenas As New String[]
+    Dim a As Integer
+    Dim b As Integer
+    Dim planetaTemp As ClassPlaneta
+    Dim numero As Integer
+    Dim cuenta As Integer
+    Dim cadena As String
+
+    If nombrefichero = "" Then
+        Dialog.Title = "Seleccione un archivo"
+        Dialog.Filter = ["*.MapaEstelar.xml", "Datos de Mapa Estelardiagrama"]
+        If Not Dialog.OpenFile() Then
+            cadena = File.LOAD(Dialog.Path)
+            nombrefichero = Dialog.path
+        Else
+            Return
+        Endif
+    Else
+        cadena = File.LOAD(nombrefichero)
+
+    Endif
+    'limpio los datos anteriores
+    '
+    partida = New ClassPartida
+    abrexml = New ClassAbreXML
+    partida = abrexml.abrir(nombrefichero)
+
+    Try dibujarMapa(partida.mapa)
+
+End
+
+Public Sub ToolButtonAbre2_Click()
+    'borrado de mapa¡
+
+    partida.mapa.array_conexion.Clear
+    partida.mapa.array_planetas.Clear
+    partida.mapa.texto_descriptivo = ""
+
+    'redibujo fondo
+    draw.Begin(DrawingArea1)
+    draw.Picture(picture[fondo], 0, 0)
+    draw.End
+
+End
+
+Public Sub ToolButtonTexto_Click()
+
+    FormTextoDescriptivo.texto = partida.mapa.texto_descriptivo
+
+    FormTextoDescriptivo.Show()
+
+End
+
+Public Sub ToolButtonAbrir_Click()
+
+    'elegir fichero de "partida"
+    '
+    '''menu opcion -> Tutorial / Campañas
+    'crear jugador ->
+    '
+
+End
+
+'-------------------------------------
+'creo una partida de ejemplo...
+'-------------------------------------
+Public Sub CrearPartida(Optional ruta As String, Optional tipo_juego As String)
+
+    Dim jug As ClassJugador
+    '    Dim navetemp As ClassNave
+    '   Dim conexionTemp As ClassConexion
+    Dim indice As Integer
+    Dim a As Integer
+
+    'Creando partida...
+    'Elegir jugador: Nuevo/ Existente
+    'Eleccion de Tutoriales / Campañas
+
+    'pruebas
+    'creo  partida con la actual definicion de planetas y conexiones
+    ' partida = New ClassPartida
+    '    partida.naves.Clear
+
+    HBoxControlJuego.Enabled = True
+    jug = New ClassJugador
+
+    If tipo_juego = "tuto" Then
+
+        jug.nivel = 0
+        jug.nombre = "Jugador en pruebas"
+        jug.organizacion = "1" 'jugador HUMANO (BLANCO)
+        jug.puntuacion = "0"
+    Endif
+
+    'los archivos de campaña, poseen un identifacador mas (el jugador)....
+    'como en esta beta no se ha incluido en los archivos de configuracion XML el jugados tambien le pongo que el jugador es BLANCO
+    '--------------------------------------------------------------
+    jug.nivel = 0
+    jug.nombre = "Jugador en pruebas"
+    jug.organizacion = "1" 'jugador HUMANO (BLANCO)
+    jug.puntuacion = "0"
+    '---------------------------------------------------------------
+    'abro archivo de mapa...
+    ToolButtonAbre_Click(ruta)
+
+    Try partida.jugador = jug
+    If Error Then Return
+    '   partida.mapa.array_planetas = mapa.array_planetas
+    '   partida.mapa.array_conexion = mapa.array_conexion
+
+    FormInformacionInicialMapa.descripcion = partida.mapa.texto_descriptivo
+    FormInformacionInicialMapa.Show()
+
+    'activo reloj de planetas
+    TimerPlanetas.Enabled = True
+
+    TimerNaves.Enabled = True
+    TimerPartida.Enabled = True
+    TimerIA.enabled = True
+    TimerExplosiones.enabled = True
+    HBoxEditorMapa.visible = False
+    TextLabelMensaje.Text = ("jugando....")
+    tiempoinicial = Now()
+    FormMarcador.Show()
+
+End
+
+Public Sub Form_KeyPress()
+
+    If Key.code = Key.f1 Then
+        Select Case modo
+            Case ""
+                Desktop.open("http://f59025e4.linkbucks.com")
+            Case "crear"
+                Desktop.open("http://14cac60b.linkbucks.com")
+            Case "editar"
+                Desktop.Open("http://d3d3fdbb.linkbucks.com")
+            Case "borrar"
+                Desktop.Open("http://a83f56ea.linkbucks.com")
+            Case "jugando"
+                Desktop.Open("http://1c7c2fe2.linkbucks.com")
+
+        End Select
+
+    Endif
+
+End
+'--------------------------------------------------------
+'                  Control de TIMER
+'--------------------------------------------------------
+
+Public Sub TimerPlanetas_Timer()
+
+    Dim planetaTemp As ClassPlaneta
+    Dim organizaciones As New Integer[]
+    Dim ganador As String
+
+    For Each planetaTemp In partida.mapa.array_planetas
+        planetatemp.incrementafuerzas()
+        '    planetatemp.dibujaplaneta(DrawingArea1)
+        If organizaciones.Find(planetaTemp.organizacion) = -1 Then organizaciones.Add(planetatemp.organizacion)
+    Next
+
+    'comprobar fin del juego...
+    If organizaciones.count = 1 Then
+        'solo hay un jugador
+        '  'apago todos los timer...
+        modo = "sin jugar"
+        TimerIA.enabled = False
+        TimerNaves.Enabled = False
+        TimerPartida.enabled = False
+        TimerPlanetas.Enabled = False
+        TimerExplosiones.enabled = False
+        ganador = Choose(organizaciones[0], "blanco", "azul", "marron", "Amarillo", "rojo", "verde")
+        If partida.jugador.organizacion = ganador Then
+            HacerSonido(sonidoganador)
+        Else
+            HacerSonido(sonidoperdedor)
+        Endif
+        Message.Info(("Ganador del juego:\n" & ganador))
+        partida = Null
+        modo = ""
+        draw.Begin(DrawingArea1)
+        draw.Picture(picture[fondo], 0, 0)
+        draw.End
+        TextLabelMensaje.Text = ("Fin del juego..., elige otro nivel o create un mapa para jugar!!!")
+        ToolButtonEditor.enabled = True
+        ToolButtonCrearPartida.Enabled = True
+    Endif
+
+End
+
+Public Sub TimerNaves_Timer()
+
+    Dim navesactual As Integer
+    Dim navetemp As ClassNave
+    Dim navetempColision As ClassNave
+    Dim valor As Boolean
+    Dim a As Integer = 0
+    Dim b As Integer = 0
+    Dim exptemp As ClassExplosion
+
+    a = 0
+    For Each naveTemp In partida.naves
+
+        valor = navetemp.desplaza()
+        If valor = False Then
+            'llegada a una planeta
+            'si es de la misma organizacion añadir naves
+            If navetemp.organizacion = partida.mapa.array_planetas[navetemp.indiceplanetadestino].organizacion Then
+                partida.mapa.array_planetas[navetemp.indiceplanetadestino].numeroNaves += navetemp.tropas
+                partida.naves.Remove(a)
+
+            Else
+                'se trada de planeta enemigo
+                'quito puntuacion
+                partida.mapa.array_planetas[navetemp.indiceplanetadestino].numeroNaves -= navetemp.tropas
+                partida.naves.Remove(a)
+
+                'compruebo si lo he conquistado
+                If partida.mapa.array_planetas[navetemp.indiceplanetadestino].numeroNaves < 0 Then
+                    'lo he conquistado
+                    'cambio la organizacion
+                    navesactual = -1 * partida.mapa.array_planetas[navetemp.indiceplanetadestino].numeroNaves
+                    partida.mapa.array_planetas[navetemp.indiceplanetadestino].organizacion = navetemp.organizacion
+                    partida.mapa.array_planetas[navetemp.indiceplanetadestino].numeroNaves = navesactual ' -1 * mapa.array_planetas[navetemp.indiceplanetadestino].numeroNaves
+
+                    HacerSonido(rutasonidopeligro)
+
+                Else
+                    'sonido de bombas
+                    HacerSonido(rutasonidobombardeo)
+
+                Endif
+            Endif
+            'borro de todos tamanera la nave que ha llegado.
+
+        Else
+            'compruebo colisiones con las otras naves existentes en la pantalla
+            b = 0
+            For Each navetempColision In partida.naves
+                If navetempColision.organizacion <> navetemp.organizacion Then
+                    'no es la misma, compruebo colision
+                    If navetempColision.colision(navetemp.posActual) Then
+                        'hay colision y lucha...!!!
+                        '  Print "colision y lucha"
+                        'añade una vueva explosion...
+                        exptemp = New ClassExplosion
+                        exptemp.nueva(navetemp.posActual.x - 16, navetemp.posActual.y - 16, recorrido.count)
+                        partida.explosiones.Add(exptemp)
+
+                        If navetempColision.tropas > navetemp.tropas Then
+                            'gana la nave colision!!!
+                            navetempColision.tropas -= navetemp.tropas
+
+                            If partida.naves.Find(navetemp) <> -1 Then
+                                partida.naves.Remove(partida.naves.Find(navetemp))
+
+                                HacerSonido(rutasonidoExp)
+                            Endif
+                        Else
+                            'pierde la nave colision.tropas
+                            navetemp.tropas -= navetempColision.tropas
+                            If partida.naves.Find(navetempColision) <> -1 Then
+                                partida.naves.Remove(partida.naves.Find(navetempColision))
+
+                                HacerSonido(rutasonidoExp)
+                            Endif
+
+                        Endif
+                    Endif
+
+                Endif
+
+                b += 1
+            Next
+
+        Endif
+
+        a += 1
+    Next
+
+End
+
+Public Sub TimerPartida_Timer()
+
+    Dim navetemp As ClassNave
+
+    Dim planetaTemp As ClassPlaneta
+    Dim conexionTemp As ClassConexion
+    Dim ht As ClassTile
+    Dim array_texto As New String[]
+
+    Dim exptemp As ClassExplosion
+    Dim a, b As Integer
+
+    FormMarcador.dibujar()
+    draw.Begin(DrawingArea1)
+    'dibujo fondo
+    draw.Picture(picture[fondo], 0, 0)
+
+    'cuadricula
+    If Activada_Rejilla = True Then
+
+        'dibuja cuadricula segun dimensiones de la rejilla
+
+        For a = 0 To Int(DrawingArea1.w / valor_rejilla) ' Step valor_rejilla
+            For b = 0 To Int(DrawingArea1.h / valor_rejilla) ' Step valor_rejilla
+                draw.Circle(a * valor_rejilla, b * valor_rejilla, 2)
+
+            Next
+        Next
+
+    Endif
+
+    draw.LineStyle = Line.Dot
+
+    For Each conexiontemp In partida.mapa.array_conexion
+
+        draw.Foreground = Color.Pink
+
+        If conexiontemp.ptoA.organizacion = conexiontemp.ptoB.organizacion Then
+            'mismo color linea
+            draw.foreground = Choose(conexiontemp.ptoA.organizacion, Color.white, Color.Blue, Color.Orange, Color.Yellow, Color.Red, Color.Green)
+        Endif
+
+        draw.Line(conexiontemp.ptoA.pos.x, conexiontemp.ptoA.pos.y, conexiontemp.ptoB.pos.x, conexiontemp.ptoB.pos.y)
+
+    Next
+
+    draw.LineStyle = Line.Solid
+
+    For Each planetaTemp In partida.mapa.array_planetas
+        ht = planetatemp.dibujaplaneta()
+        draw.Picture(picture[ht.ruta], ht.pos.x, ht.pos.y)
+        array_texto = Split(ht.tag, "|")
+        draw.Font.Size = 7
+        colorfondorectangulo = Choose(planetatemp.organizacion, Color.white, Color.Blue, Color.Orange, Color.Yellow, Color.Red, Color.Green)
+        draw.foreground = Color.White
+        draw.Rect(ht.pos.x - 10, ht.pos.y - 10, Draw.TextWidth(array_texto[0]) + 2, draw.TextHeight(array_texto[0]) + 2)
+        draw.FillRect(ht.pos.x - 9, ht.pos.y - 9, Draw.TextWidth(array_texto[0]), draw.TextHeight(array_texto[0]), Color.black)
+        draw.Foreground = colorfondorectangulo
+
+        draw.Text(array_texto[0], ht.pos.x - 9, ht.pos.y - 9)
+        ' Print array_texto[1]
+    Next
+
+    For Each navetemp In partida.naves
+        ht = navetemp.dibuja()
+
+        draw.Picture(picture[ht.ruta], ht.pos.x, ht.pos.y)
+        array_texto = Split(ht.tag, "|")
+
+        draw.FillRect(ht.pos.x, ht.pos.y - Val(array_texto[1]), Draw.TextWidth(array_texto[0]), draw.TextHeight(array_texto[0]), Color.DarkBlue)
+        draw.Foreground = Color.white
+        draw.Font.Size = 6
+        draw.Text(array_texto[0], ht.pos.x, ht.pos.y - Val(array_texto[1]))
+
+    Next
+
+    'dibujo explosiones
+    If controlexplosiones = True Then
+        For Each exptemp In partida.explosiones
+            If exptemp.contador <> -1 Then Draw.Picture(recorrido[exptemp.contador], exptemp.coorX, exptemp.coorY) 'dibujo array de explosion
+        Next
+    Endif
+
+    'dibujo planeta elegido
+    If dibujaelegido = True Then
+        draw.Foreground = Color.Violet
+
+        draw.Circle(planetaJugandoOrigen.pos.x, planetaJugandoOrigen.pos.y, Choose(planetaJugandoOrigen.tipo, 25, 38, 55, 85))
+        draw.Circle(planetaJugandoOrigen.pos.x, planetaJugandoOrigen.pos.y, Choose(planetaJugandoOrigen.tipo, 28, 41, 59, 85))
+    Endif
+
+    draw.End
+
+End
+
+Public Sub TimerIA_Timer()
+
+    ModuleIA.IA(partida)
+
+End
+'-----------------------------------dividir una imagen en un array de pictures-------------------------------
+
+Public Sub divideImagen(imageninicial As String, SpritesX As Integer, SpritesY As Integer) As Picture[]
+
+    Dim a, b As Integer
+
+    Dim hImagentemp As New Picture
+    Dim hImagenInicial As New Picture
+    Dim harray_imagenes As New Picture[]
+    Dim porcionX As Float
+    Dim porcionY As Float
+
+    hImagenInicial = Picture[imageninicial]
+    porcionX = (hImagenInicial.w) / SpritesX
+    porcionY = (hImagenInicial.h) / SpritesY
+
+    '    Print porcionX, porcionY
+    For b = 0 To Spritesy - 1
+        For a = 0 To Spritesx - 1
+            hImagentemp = hImagenInicial.Copy(a * porcionX, b * porciony, porcionX, porciony)
+            harray_imagenes.Add(hImagentemp)
+
+        Next
+
+    Next
+
+    Return harray_imagenes
+
+End
+
+Public Sub TimerExplosiones_Timer()
+
+    Dim exptemp As ClassExplosion
+
+    For Each exptemp In partida.explosiones
+
+        exptemp.cuenta()
+
+        If exptemp.contador = -1 Then
+            'elimina la explosion que se ha producido
+
+            partida.explosiones.Remove(partida.explosiones.Find(exptemp))
+        Endif
+    Next
+
+End
+
+Public Sub ToolButtonPararJuego_Click()
+
+    'activo reloj de planetas
+    TimerPlanetas.Enabled = False
+
+    TimerNaves.Enabled = False
+    TimerPartida.Enabled = False
+    TimerIA.enabled = False
+    TimerExplosiones.enabled = False
+
+    ToolButtonInicia.enabled = True
+    ToolButtonPararJuego.enabled = False
+
+End
+
+Public Sub ToolButtonInicia_Click()
+
+    'activo reloj de planetas
+    TimerPlanetas.Enabled = True
+
+    TimerNaves.Enabled = True
+    TimerPartida.Enabled = True
+    TimerIA.enabled = True
+    TimerExplosiones.enabled = True
+
+    ToolButtonInicia.enabled = False
+    ToolButtonPararJuego.enabled = True
+
+End
+
+Public Sub ToolButtonSonido_Click()
+
+    If sonidoactivado = True Then
+        sonidoactivado = False
+        ToolButtonSonido.Picture = picture["sonidobn.png"]
+    Else
+        sonidoactivado = True
+        ToolButtonSonido.Picture = picture["sonido.png"]
+    Endif
+
+End
+
+Public Sub HacerSonido(cadena As String)
+
+    If sonidoactivado = True Then
+        Exec ["mplayer", cadena]
+    Endif
+
+End
+
+Fast Public Sub dibujarMapa(mapas As ClassMap)
+
+    Dim planetaTemp As ClassPlaneta
+    Dim conexionTemp As ClassConexion
+    Dim ht As ClassTile
+    Dim array_texto As New String[]
+    Dim colorfondorectangulo As Integer
+    Dim exptemp As ClassExplosion
+    Dim a, b As Integer
+
+    draw.Begin(DrawingArea1)
+    draw.Picture(picture[fondo], 0, 0)
+    'dibujo fondo
+    If Activada_Rejilla = True Then
+
+        'dibuja cuadricula segun dimensiones de la rejilla
+
+        For a = 0 To Int(DrawingArea1.w / valor_rejilla) ' Step valor_rejilla
+            For b = 0 To Int(DrawingArea1.h / valor_rejilla) ' Step valor_rejilla
+                draw.Circle(a * valor_rejilla, b * valor_rejilla, 2)
+
+            Next
+        Next
+
+    Endif
+
+    draw.LineStyle = Line.Dot
+    For Each conexiontemp In mapas.array_conexion
+
+        draw.Foreground = Color.Pink
+
+        If conexiontemp.ptoA.organizacion = conexiontemp.ptoB.organizacion Then
+            'mismo color linea
+            draw.foreground = Choose(conexiontemp.ptoA.organizacion, Color.white, Color.Blue, Color.Orange, Color.Yellow, Color.Red, Color.Green)
+        Endif
+
+        draw.Line(conexiontemp.ptoA.pos.x, conexiontemp.ptoA.pos.y, conexiontemp.ptoB.pos.x, conexiontemp.ptoB.pos.y)
+        If modo = "borrar" Or modo = "editar" Then
+            'marcar en todos las conexiones un cuadrado Rojo en el centro
+            draw.FillColor = Color.white
+            draw.fillRect((conexiontemp.ptoA.pos.x + conexiontemp.ptoB.pos.x) / 2 - 5, (conexiontemp.ptoA.pos.y + conexiontemp.ptoB.pos.y) / 2 - 5, 10, 10)
+
+        Endif
+    Next
+    draw.LineStyle = Line.Solid
+
+    For Each planetaTemp In mapas.array_planetas
+        ht = planetatemp.dibujaplaneta()
+        draw.Picture(picture[ht.ruta], ht.pos.x, ht.pos.y)
+        array_texto = Split(ht.tag, "|")
+        array_texto[0] = Subst$(array_texto[0], "\n", "")
+        '    Print array_texto[0]
+        colorfondorectangulo = Choose(planetatemp.organizacion, Color.white, Color.Blue, Color.Orange, Color.Yellow, Color.Red, Color.Green)
+        draw.foreground = Color.White
+        draw.Font.Size = 7
+        draw.Rect(ht.pos.x - 10, ht.pos.y - 10, Draw.TextWidth(array_texto[0]) + 2, draw.TextHeight(array_texto[0]) + 2)
+        draw.FillRect(ht.pos.x - 9, ht.pos.y - 9, Draw.TextWidth(array_texto[0]), draw.TextHeight(array_texto[0]), Color.black)
+        draw.Foreground = colorfondorectangulo
+
+        draw.Text(array_texto[0], ht.pos.x - 9, ht.pos.y - 9)
+        ' Print array_texto[1]
+    Next
+
+    'dibujo planeta elegido
+    If dibujaelegido = True Then
+        draw.Foreground = Color.Violet
+
+        draw.Circle(planetaJugandoOrigen.pos.x, planetaJugandoOrigen.pos.y, Choose(planetaJugandoOrigen.tipo, 25, 38, 55, 80))
+        draw.Circle(planetaJugandoOrigen.pos.x, planetaJugandoOrigen.pos.y, Choose(planetaJugandoOrigen.tipo, 28, 41, 59, 85))
+    Endif
+
+    draw.End
+
+End
+
+Private Sub planetaclick()
+
+    Dim a As Integer
+    Dim planetaTempA As ClassPlaneta
+
+End
+
+Public Sub ToolButtonFin_Click()
+    'cierra todas los formularios...
+
+    Try FormPreferencias.Close()
+    Try FormMarcador.Close()
+    Try FormInformacionInicialMapa.Close()
+    Try FormTextoDescriptivo.Close()
+
+    Me.Close
+
+End
+
+Public Sub ToolButtonEdita_Click()
+
+    If modo = "editar" Then
+        'activo botones
+
+        ToolButtonPlaneta.enabled = True
+        ToolButtonConexion.enabled = True
+        ToolButtonBorra.enabled = True
+        ToolButtonTexto.enabled = True
+        TextLabelMensaje.Text = ("Editando mapa, puedes añadir planetas y conexiones")
+        modo = "crear"
+    Else
+        'oscurezco botones
+        ToolButtonPlaneta.enabled = False
+        ToolButtonConexion.enabled = False
+        ToolButtonBorra.enabled = False
+        ToolButtonTexto.enabled = False
+        TextLabelMensaje.Text = ("Haga click en una planeta  para editarlo (las conexiones sole se pueden borrar)")
+        modo = "editar"
+    Endif
+
+End
+
+Public Sub ToolButtonFinEditor_Click()
+
+    modo = ""
+    ToolButtonNuevo.enabled = True
+    ToolButtonAbrir.enabled = True
+    ToolButtonGuarda.enabled = True
+    ToolButtonGuardaComo.enabled = True
+    ToolButtonFin.enabled = True
+    HBoxEditorMapa.visible = False
+
+End
+
+Public Function buscarplaneta(mapita As ClassMap, x As Integer, y As Integer) As ClassResultadoBusqueda
+
+    Dim a As Integer
+    Dim planetaTempA As ClassPlaneta
+    Dim ResultadoBusqueda As ClassResultadoBusqueda
+
+    planetatempA = New ClassPlaneta
+    ResultadoBusqueda = New ClassResultadoBusqueda
+    a = -1
+    While (a < mapita.array_planetas.count - 1)
+        a += 1
+        planetatempA = mapita.array_planetas[a].dentro(x, y)
+        If planetatempA <> Null Then
+            ResultadoBusqueda.objeto = planetatempA
+            ResultadoBusqueda.resultado = True
+            Return ResultadoBusqueda
+        Endif
+    Wend
+    'devuelve null si no ha encontrado nada...
+
+    ResultadoBusqueda.objeto = Null
+    ResultadoBusqueda.resultado = False
+    Return ResultadoBusqueda
+
+End
+
+Public Function buscarConexion(mapita As ClassMap, x As Integer, y As Integer) As ClassConexion
+
+    Dim a As Integer
+    Dim conexiontemp As ClassConexion
+
+    a = -1
+    While (a < mapita.array_conexion.count - 1)
+        a += 1
+        conexionTemp = mapita.array_conexion[a].dentro(x, y)
+        If conexionTemp <> Null Then
+            Return conexionTemp
+        Endif
+    Wend
+    'devuelve null si no ha encontrado nada...
+    Return Null
+
+End
+
+Public Function buscarConexionPlaneta(mapita As ClassMap, x As Integer, y As Integer, planeta As ClassPlaneta) As Boolean
+
+    Dim a As Integer
+    Dim conexiontemp As ClassConexion
+    Dim prueba As Boolean
+
+    a = -1
+    While (a < mapita.array_conexion.count - 1)
+        a += 1
+        prueba = (mapita.array_conexion[a].ptoA = planeta) Or (mapita.array_conexion[a].ptoB = planeta)
+
+        If prueba Then
+            Return True
+        Endif
+    Wend
+    'devuelve null si no ha encontrado nada...
+    Return False
+
+End
+
+Public Function buscarConexionPlanetaPlaneta(mapita As ClassMap, x As Integer, y As Integer, planeta As ClassPlaneta, planeta2 As ClassPlaneta) As Boolean
+
+    Dim a As Integer
+    Dim conexiontemp As ClassConexion
+    Dim prueba As Boolean
+
+    a = -1
+    While (a < mapita.array_conexion.count - 1)
+        a += 1
+        prueba = ((mapita.array_conexion[a].ptoA = planeta) Or (mapita.array_conexion[a].ptoB = planeta)) And ((mapita.array_conexion[a].ptoA = planeta2) Or (mapita.array_conexion[a].ptoB = planeta2))
+
+        If prueba Then
+            Return True
+        Endif
+    Wend
+    'devuelve null si no ha encontrado nada...
+    Return False
+
+End
+'Public Sub dibujoMapa(map As ClassMap)
+
+'   Dim ht As ClassTile
+'   Dim planetaTemp As ClassPlaneta
+'   Dim array_texto As New String[]
+'   Dim conexiontemp As ClassConexion'
+
+'draw.Begin(DrawingArea1)
+'dibujo fondo
+'draw.Picture(picture[fondo], 0, 0)
+'For Each planetaTemp In map.array_planetas
+'    ht = planetatemp.dibujaplaneta()
+'    draw.Picture(picture[ht.ruta], ht.pos.x, ht.pos.y)
+'    array_texto = Split(ht.tag, "|")
+'    draw.Font.Size = 7
+'    colorfondorectangulo = Choose(planetatemp.organizacion, Color.white, Color.Blue, Color.Orange, Color.Yellow, Color.Red, Color.Green)
+'    draw.foreground = Color.White
+'    draw.Rect(ht.pos.x - 1, ht.pos.y - 1, Draw.TextWidth(array_texto[0]) + 2, draw.TextHeight(array_texto[0]) + 2)
+'    draw.FillRect(ht.pos.x, ht.pos.y, Draw.TextWidth(array_texto[0]), draw.TextHeight(array_texto[0]), Color.black)
+'    draw.Foreground = colorfondorectangulo
+
+'   draw.Text(array_texto[0], ht.pos.x, ht.pos.y)
+' Print array_texto[1]
+'  Next
+
+' For Each conexiontemp In map.array_conexion
+
+'    draw.Foreground = Color.Pink
+
+'   If conexiontemp.ptoA.organizacion = conexiontemp.ptoB.organizacion Then
+'       'mismo color linea
+'      draw.foreground = Choose(conexiontemp.ptoA.organizacion, Color.white, Color.Blue, Color.Orange, Color.Yellow, Color.Red, Color.Green)
+'  Endif
+
+' draw.LineStyle = Line.Dot
+
+' draw.Line(conexiontemp.ptoA.pos.x, conexiontemp.ptoA.pos.y, conexiontemp.ptoB.pos.x, conexiontemp.ptoB.pos.y)
+
+'If modo = "edita" Then
+'marcar en todos las conexiones un cuadrado Rojo en el centro
+'   draw.Rect.fill = Color.Red
+'   draw.Rect((conexiontemp.ptoA.pos.x + conexiontemp.ptoB.pos.x) / 2 - 25, (conexiontemp.ptoA.pos.y + conexiontemp.ptoB.pos.y) / 2 - 25, 50, 50)
+'Endif
+' Next
+
+'draw.End
+
+'End
+
+Public Sub ToolButtonBorra_Click()
+
+    If modo = "borrar" Then
+        'activo botones
+
+        ToolButtonPlaneta.enabled = True
+        ToolButtonConexion.enabled = True
+        ToolButtonEdita.enabled = True
+        ToolButtonTexto.enabled = True
+        TextLabelMensaje.Text = ("Editando mapa, puedes añadir planetas y conexiones")
+        modo = "crear"
+    Else
+        'oscurezco botones
+        ToolButtonPlaneta.enabled = False
+        ToolButtonConexion.enabled = False
+        ToolButtonEdita.enabled = False
+        ToolButtonTexto.enabled = False
+        TextLabelMensaje.Text = ("Borrando elementos del mapa, puedes borrar planetas o conexiones")
+
+        modo = "borrar"
+        dibujarMapa(partida.mapa)
+    Endif
+
+End
+
+Public Sub ToolButtonCrearPartida_Click()
+
+    Dim op As New ClassOpcion
+    Dim f As New FormJugador
+    Dim tipo_juego As String
+
+    op = New ClassOpcion
+    op.texto = ""
+    f.opcion = op
+    f.ShowDialog()
+    'la opcion que elegio fue...
+    If op.texto = "" Then Return
+
+    'paso a abrir el archivo e iniciar el juego
+
+    If Mid$(op.texto, 1, 4) = "tuto" Then
+        tipo_juego = "tuto" 'para los juegos tutoriales siempre es el blanco el color del jugador
+        op.texto = User.home & "/guerraestrellas/tuto/" & op.texto
+
+    Endif
+
+    CrearPartida(op.texto, tipo_juego)
+    modo = "jugando"
+    ToolButtonEditor.enabled = False
+    ToolButtonCrearPartida.Enabled = False
+
+End
+
+Public Sub ToolButtonEditor2_Click()
+
+    FormPreferencias.Show()
+
+End
+
+Public Sub ToolButtonUpdate_Click()
+
+    Desktop.Open("http://358ce545.linkbucks.com")
+
+End
+
+Public Sub ToolButtonCompartir_Click()
+
+    Dim dibujo As New Picture
+    Dim destino As String
+    Dim abrexml As ClassAbreXML
+    Dim a As Integer
+    Dim nombrealreves As String
+    Dim solonombre As String
+    Dim comando As String
+
+    'preguntar por el archivo que quiere compartir
+    'version 0.0.7, da automaticamente los permisos..
+    '  Message.Info("Para poder compartir...\nTienes que dar permisos de ejecucion al archivo eje.bin\n que se encuentra en tu directorio:\n user.home /guerraestrellas/temporal/ \n Usando el  comando: chmod 777 eje.bin")
+
+    Dialog.Title = "Seleccione un archivo para Compartir"
+    Dialog.Filter = ["*.MapaEstelar.xml", "Datos de Mapa Estelardiagrama"]
+    If Not Dialog.OpenFile() Then
+        destino = Dialog.Path
+
+        TextLabelMensaje.text = "Compartiendo archivo de mapa en internet... espere...."
+        Wait 0.1 'espero un momento para que se vea el mensaje...
+    Else
+        Return
+    Endif
+
+    'abrirlo y crear un drawingArea, para dibujarlo
+
+    partida = New ClassPartida
+    abrexml = New ClassAbreXML
+    partida = abrexml.abrir(destino)
+
+    For a = Len(destino) To 0 Step -1
+        If Mid$(destino, a, 1) = "/" Then
+            a = -100
+        Else
+            nombrealreves &= Mid$(destino, a, 1)
+        Endif
+    Next
+
+    '  Print nombrealreves
+
+    For a = Len(nombrealreves) To 1 Step -1
+
+        solonombre &= Mid$(nombrealreves, a, 1)
+
+    Next
+
+    Try Copy destino To User.home & "/guerraestrellas/temporal/" & solonombre
+
+    Exec ["tar", "czvf", User.home & "/guerraestrellas/temporal/" & solonombre & ".tar.gz", User.home & "/guerraestrellas/temporal/" & solonombre] Wait
+
+    dibujarMapa(partida.mapa)
+    Wait 0.1
+    'captura la pantalla
+    dibujo = Desktop.Screenshot(FMain.x + DrawingArea1.x, FMain.y + DrawingArea1.y + 30, DrawingArea1.w, DrawingArea1.h)
+    'guardo el dibujo en un fichero
+
+    Try dibujo.Save(User.home & "/guerraestrellas/temporal/" & solonombre & ".tar.gz.png")
+
+    If Error Then
+        Message.Error("No he podido guardar imagen")
+    Endif
+    Wait 0.1 'espero un poco para que de tiempo a comprimir archivo...
+    'ejecuto programa de subida al servidor y espero a que termine...
+    comando = User.home & "/guerraestrellas/temporal/./eje.bin " & User.home & "/guerraestrellas/temporal/" & solonombre & ".tar.gz"
+    Print "Comando externo: "; comando
+    Shell comando Wait
+    comando = User.home & "/guerraestrellas/temporal/./eje.bin " & User.home & "/guerraestrellas/temporal/" & solonombre & ".tar.gz.png"
+    Print "Comando externo: "; comando
+    Shell comando Wait
+    'muestro mensaje de fin...
+    Message.Info("Mapa Compartido con la comunidad")
+    'muestro la pantalla del navegador con los mapas compartidos...
+    Desktop.Open("http://6bd6c67e.linkbucks.com")
+
+End
+
+Public Sub ToolButtonRejilla_Click()
+
+    If Activada_Rejilla = True Then
+        Activada_Rejilla = False
+        ToolButtonRejilla.Picture = picture["rejillamas.jpg"]
+        fondo = fondoanterior
+        dibujarMapa(partida.mapa)
+        TextLabelMensaje.text = ("Desactivo rejilla")
+
+    Else
+
+        Activada_Rejilla = True
+        ToolButtonRejilla.Picture = picture["rejillamenos.jpg"]
+        fondoanterior = fondo
+        fondo = fondoBn
+        dibujarMapa(partida.mapa)
+        TextLabelMensaje.text = ("Activo rejilla")
+    Endif
+
+End
+
+Public Function rejilla(x As Integer, y As Integer, Activada_Rejilla As Boolean) As ClassPosicion
+
+    Dim pos As ClassPosicion
+
+    pos = New ClassPosicion
+
+    If Activada_Rejilla = True Then
+
+        pos.x = Round(x / valor_rejilla) * valor_rejilla
+        pos.y = Round(y / valor_rejilla) * valor_rejilla
+
+        Return pos
+
+    Else
+
+        pos.x = X
+        pos.y = y
+        Return pos
+    Endif
+
+End
+
+Public Sub ToolButtonCancelaOperacion_Click()
+
+    dibuja = ""
+    TextLabelMensaje.text = ("Cancelada operacion")
+    ToolButtonPlaneta.enabled = True
+    ToolButtonConexion.enabled = True
+    ToolButtonEdita.enabled = True
+    ToolButtonTexto.enabled = True
+
+End
+
+Public Sub Form_Close()
+
+    Try FormJugador.Close()
+    Try FormMarcador.Close()
+    Try FormInformacionInicialMapa.Close()
+    Me.Close
+
+End
+
+Public Sub DrawingArea1_MouseMove()
+
+End
+
+Public Sub DrawingArea1_MouseWheel()
+
+    'datos de la posicion raton...
+    raton.x = mouse.X
+    raton.y = mouse.Y
+
+End

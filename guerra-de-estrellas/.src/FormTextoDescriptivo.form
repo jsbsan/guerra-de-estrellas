@@ -1,0 +1,32 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,57)
+  Icon = Picture["icon:/22/text-bold"]
+  { TextLabel1 TextLabel
+    MoveScaled(1,26,62,26)
+    Border = Border.Raised
+  }
+  { TextArea1 TextArea
+    MoveScaled(1,1,62,17)
+  }
+  { ToolButtonCancelar ToolButton
+    MoveScaled(31,53,14,3)
+    Text = ("Cancelar")
+    Picture = Picture["icon:/32/cancel"]
+    Border = True
+  }
+  { ToolButtonAceptar ToolButton
+    MoveScaled(47,53,13,3)
+    Text = ("Aceptar")
+    Picture = Picture["icon:/32/apply"]
+    Border = True
+  }
+  { ToolButtonVisualizar ToolButton
+    MoveScaled(10,19,43,6)
+    ToolTip = ("Visualizar")
+    Text = ("Muestra el texto en formato etiqueta html")
+    Picture = Picture["icon:/22/exec"]
+    Border = True
+  }
+}

@@ -1,0 +1,62 @@
+' Gambas class file
+
+Public planetaTemp As ClassPlaneta
+
+Public Sub Form_Open()
+
+    ComboBoxOrg.Add("blanco")
+    ComboBoxOrg.Add("Azul")
+    ComboBoxOrg.Add("Marron")
+    ComboBoxOrg.Add("Amarillo")
+    ComboBoxOrg.Add("Rojo")
+    ComboBoxOrg.Add("Verde")
+
+    ComboBoxTip.Add("Pequeño")
+    ComboBoxTip.Add("Mediano")
+    ComboBoxTip.Add("Grande")
+    ComboBoxTip.Add("Gigante")
+
+    If planetatemp.organizacion = 0 Then
+        SpinBoxTropasIniciales.Value = 2
+    Else
+        SpinBoxTropasIniciales.Value = planetaTemp.numeroNaves
+        ComboBoxOrg.text = Choose(planetatemp.organizacion, "blanco", "Azul", "Marron", "Amarillo", "Rojo", "Verde")
+        ComboBoxTip.text = Choose(planetaTemp.tipo, "Pequeño", "Mediano", "Grande", "Gigante")
+    Endif
+
+End
+
+Public Sub ToolButtonAceptar_Click()
+
+    planetatemp.organizacion = ComboBoxOrg.find(ComboBoxOrg.text) + 1
+    planetaTemp.tipo = ComboBoxTip.find(ComboBoxTip.text) + 1
+    planetaTemp.numeroNaves = SpinBoxTropasIniciales.Value
+    planetaTemp.cambio = True
+    Me.close
+
+End
+
+Public Sub ToolButtonCancelar_Click()
+
+    planetaTemp.cambio = False
+    planetaTemp.organizacion = 0
+    Me.Close
+
+End
+
+Public Sub ComboBoxTip_Change()
+
+    If ComboBoxTip.text = "Pequeño" Then SpinBoxTropasIniciales.Value = 2
+    If ComboBoxTip.text = "Mediano" Then SpinBoxTropasIniciales.Value = 4
+    If ComboBoxTip.text = "Grande" Then SpinBoxTropasIniciales.Value = 8
+    If ComboBoxTip.text = "Gigante" Then SpinBoxTropasIniciales.Value = 16
+
+End
+
+Public Sub LabelOrg_MouseDown()
+
+End
+
+Public Sub LabelTipo_MouseDown()
+
+End

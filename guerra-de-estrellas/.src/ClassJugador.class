@@ -1,0 +1,6 @@
+' Gambas class file
+
+Public nombre As String 'nombre del jugador
+Public organizacion As Integer ' 1 (blanco),2(azul),3(marron),4(Amarillo),5(rojo),6(verde)
+Public nivel As Integer ' nivel en los tutoriales
+Public puntuacion As Integer 'puntuacion del jugador

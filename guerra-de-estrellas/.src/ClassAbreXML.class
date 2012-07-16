@@ -1,0 +1,234 @@
+' Gambas class file
+
+Private partida As ClassPartida
+Private xml As XmlReader
+Private part As ClassPartida
+
+Public Function abrir(ruta As String) As ClassPartida
+
+    Dim p As Classpartida
+    'inicio la part
+    p = New ClassPartida
+    part = New ClassPartida
+    xml = New XmlReader
+
+    Try xml.Open(ruta)
+    If Error Then
+        Message.Error("Fallo al intentar abrir el archivo:\n" & ruta)
+        Return Null
+    Endif
+
+    Do While True
+        If xml.Node.type = XmlReaderNodeType.element Then
+
+            If xml.Node.name = "GuerraDeEstrellas" Then
+                'pasamos a la lectura
+                lectura(xml)
+                Return part
+            Else
+                Message.Error("El documento no es del juego GuerradeEstrellas")
+                xml.Close()
+
+            Endif
+        Endif
+
+        Try xml.Read()
+        '   If Error Then
+        'Message.Error("Formato xml no valido")
+        ' Return Null
+        '  Endif
+        If xml.eof Then Break
+    Loop
+
+    Return p
+
+End
+
+Private Function lectura(xml As XmlReader) As ClassPartida
+
+    Dim conexiontemp As ClassConexion
+    Dim ptemp As ClassPartida
+
+    Do While True
+
+        Try xml.Read()
+        If xml.eof Then Break
+        If Error Then Return
+
+        If xml.Node.type = 1 Then
+
+            If xml.Node.name = "Planetas" Then
+                'añado un planeta a partida.mapa
+                rellenaItemPlaneta(xml)
+            Else
+                If xml.Node.name = "Conexiones" Then
+                    rellenaItemConexion(xml)
+
+                Else
+                    If xml.Node.Name = "TextoDescriptivo" Then
+                        rellenaItemDescripcion(xml)
+                    Else
+                        'saltamos el nodo
+
+                        Try xml.Read()
+                        If Error Then Break
+
+                    Endif
+                Endif
+            Endif
+        Endif
+
+    Loop
+
+End
+
+Private Sub rellenaItemPlaneta(xml As XmlReader) '' comentario de lo que hace esta funcion..
+
+    Dim planetatemp As ClassPlaneta
+
+    planetatemp = New ClassPlaneta
+    xml.Read()
+    Do While True
+        If xml.Node.type = XmlReaderNodeType.Element Then
+            Select Case xml.node.name
+                Case "Indice"
+                    xml.Read()
+                    Try planetatemp.indice = Val(xml.Node.Value)
+                    xml.Read()
+                Case "Pos.x"
+                    xml.Read()
+                    planetatemp.pos.x = Val(xml.Node.value)
+                    xml.Read()
+                Case "Pos.y"
+                    xml.Read()
+                    planetatemp.pos.y = Val(xml.Node.value)
+                    xml.Read()
+                Case "Organizacion"
+                    xml.Read()
+                    If xml.Node.value = "" Then
+                    planetatemp.organizacion = 0    
+                    Else
+                    planetatemp.organizacion = Val(xml.Node.value)
+                    Endif
+                    xml.Read()
+                Case "tipo"
+                    xml.Read()
+                    If xml.Node.value = "" Then
+                        planetatemp.tipo = 0
+                    Else
+                        planetatemp.tipo = Val(xml.Node.value)
+                    Endif
+                    xml.Read()
+                Case "numeroNaves"
+                    xml.Read()
+                    If xml.Node.value = "" Then
+                        planetatemp.numeroNaves = 0
+                    Else
+                        planetatemp.numeroNaves = Val(xml.Node.value)
+                    Endif
+
+                    xml.Read()
+            End Select
+        Endif
+        xml.Read()
+        If Error Then Break
+
+
+        If xml.Node.Type = XmlReaderNodeType.EndElement Then
+            Break
+        Endif
+
+    Loop
+
+    If planetatemp <> Null Then part.mapa.array_planetas.Add(planetatemp)
+
+End
+
+Private Sub rellenaItemConexion(xml As XmlReader)
+
+    Dim conexiontemp As ClassConexion
+
+    conexiontemp = New ClassConexion
+
+    xml.Read()
+    Do While True
+        If xml.Node.type = XmlReaderNodeType.Element Then
+
+            Select Case xml.node.name
+                Case "ptoAindice"
+                    xml.Read()
+                    If xml.Node.value = "" Then
+                        conexiontemp.ptoAindice = 0
+                    Else
+                        conexiontemp.ptoAindice = Val(xml.Node.Value)
+                    Endif
+                    xml.Read()
+                Case "orgA"
+                    xml.Read()
+                    If xml.Node.value = "" Then
+                        conexiontemp.orgA = 0
+                    Else
+                        conexiontemp.orgA = Val(xml.Node.Value)
+                    Endif
+                    xml.Read()
+                Case "ptoBindice"
+                    xml.Read()
+                    If xml.Node.Value = "" Then
+                        conexiontemp.ptoBindice = 0
+                    Else
+                        conexiontemp.ptoBindice = Val(xml.Node.Value)
+                    Endif
+                    xml.Read()
+                Case "orgB"
+                    xml.Read()
+                    If xml.Node.value = "" Then
+                        conexiontemp.orgB = 0
+                    Else
+                        conexiontemp.orgB = Val(xml.Node.Value)
+                    Endif
+                    xml.Read()
+
+            End Select
+
+        Endif
+        xml.Read()
+        If Error Then Break
+        If xml.Node.Type = XmlReaderNodeType.EndElement Then
+
+            Break
+        Endif
+
+    Loop
+    If conexiontemp <> Null Then
+        conexiontemp.ptoA = part.mapa.array_planetas[conexiontemp.ptoAindice]
+        conexiontemp.ptoB = part.mapa.array_planetas[conexiontemp.ptoBindice]
+
+        part.mapa.array_conexion.Add(conexiontemp)
+    Endif
+
+End
+
+Private Sub rellenaItemDescripcion(xml As XmlReader)
+
+    Dim texto As String
+
+    xml.Read()
+    Do While True
+        If xml.Node.type = XmlReaderNodeType.Element Then
+            Select Case xml.node.name
+                Case "Texto"
+                    xml.Read()
+                    texto = xml.Node.Value
+                    xml.Read()
+            End Select
+            part.mapa.texto_descriptivo = texto
+        Endif
+        xml.Read()
+        If Error Then Break
+        If xml.Node.Type = XmlReaderNodeType.EndElement Then
+            Break
+        Endif
+
+    Loop
+
+End

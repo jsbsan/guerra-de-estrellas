@@ -1,0 +1,14 @@
+' Gambas class file
+
+Public mapa As ClassMap 'mapa de la partida
+Public jugador As Classjugador 'jugador
+Public naves As New ClassNave[] 'array de las naves existentes...
+Public explosiones As New ClassExplosion[] ' array de todas las explosiones
+
+Public Sub _new()
+
+    mapa = New ClassMap
+    jugador = New ClassJugador
+    naves = New ClassNave[]
+
+End

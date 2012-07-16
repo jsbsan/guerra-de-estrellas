@@ -1,0 +1,24 @@
+' Gambas class file
+
+Public version As String
+
+Public Sub Form_Open()
+
+    version = "0.1.0"
+    Label2.text = Replace$(Label2.text, "X.X.X", version)
+    Me.center
+
+End
+
+Public Sub Label1_MouseDown()
+
+    Desktop.Open("http://d1342667.linkbucks.com")
+
+End
+
+Public Sub Button1_Click()
+
+    Desktop.Open("http://358ce545.linkbucks.com/")
+    Me.Close
+
+End

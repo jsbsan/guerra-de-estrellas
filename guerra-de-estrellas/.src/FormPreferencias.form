@@ -1,0 +1,120 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,42,60)
+  { TextLabel1 TextLabel
+    MoveScaled(1,0,37,6)
+    Text = ("<h1>Preferencias</h1>")
+    Alignment = Align.Center
+  }
+  { ToolButtonAceptar ToolButton
+    MoveScaled(24,54,14,5)
+    Text = ("Salir")
+    Picture = Picture["icon:/22/apply"]
+    Border = True
+  }
+  { Label1 Label
+    MoveScaled(-1,5,41,3)
+    Font = Font["Courier 10 Pitch,-2"]
+    Text = ("En esta pantalla, configuramos el programa")
+    Alignment = Align.Center
+  }
+  { Panel1 Panel
+    MoveScaled(2,8,38,11)
+    Border = Border.Plain
+    { Label2 Label
+      MoveScaled(1,1,9,3)
+      Text = ("Planetas")
+    }
+    { RadioButtonPlanetaAlambre RadioButton
+      MoveScaled(6,6,3,3)
+      Value = True
+    }
+    { RadioButtonPlanetaRelleno RadioButton
+      MoveScaled(17,6,3,3)
+    }
+    { PictureBoxPlanetaAlambre PictureBox
+      MoveScaled(5,5,5,5)
+      Picture = Picture["planetas/5.png"]
+      Stretch = True
+    }
+    { PictureBoxPlanetaRelleno PictureBox
+      MoveScaled(16,5,5,5)
+      Picture = Picture["planetasR/32x32/5r.png"]
+      Stretch = True
+    }
+  }
+  { Panel2 Panel
+    MoveScaled(2,20,38,11)
+    Border = Border.Plain
+    { Label3 Label
+      MoveScaled(1,1,36,3)
+      Font = Font["-2"]
+      Text = ("Explosiones (activarlas o que no se vean)")
+    }
+    { PictureBoxConSonido PictureBox
+      MoveScaled(5,5,5,5)
+      Picture = Picture["icon:/48/apply"]
+      Stretch = True
+    }
+    { RadioButtonExploSi RadioButton
+      MoveScaled(2,6,3,3)
+      Value = True
+    }
+    { RadioButtonExploNO RadioButton
+      MoveScaled(12,6,3,3)
+    }
+    { PictureBoxSinSonido PictureBox
+      MoveScaled(16,5,5,5)
+      Picture = Picture["icon:/48/delete"]
+      Stretch = True
+    }
+  }
+  { Panel3 Panel
+    MoveScaled(2,32,38,11)
+    Border = Border.Plain
+    { Label4 Label
+      MoveScaled(1,1,36,3)
+      Text = ("Fondo")
+    }
+    { RadioButtonFondonormal RadioButton
+      MoveScaled(9,1,15,2)
+      Text = ("Por defecto")
+      Value = True
+    }
+    { RadioButtonFondoEstrellas RadioButton
+      MoveScaled(9,4,17,3)
+      Text = ("Estrellas")
+    }
+    { RadioButtonFondoCuadricula RadioButton
+      MoveScaled(9,7,17,3)
+      Text = ("Cuadricula")
+    }
+  }
+  { Rejilla Label
+    MoveScaled(3,44,8,3)
+    Text = ("Rejilla:")
+  }
+  { ValueBoxRejilla ValueBox
+    MoveScaled(11,44,11,3)
+  }
+  { ToolButtonCancelar ToolButton
+    MoveScaled(3,54,14,5)
+    Text = ("Cancelar")
+    Picture = Picture["icon:/22/cancel"]
+    Border = True
+  }
+  { Label5 Label
+    MoveScaled(3,49,9,3)
+    Text = ("Sonido:")
+  }
+  { ToolButtonSonido ToolButton
+    MoveScaled(16,48,6,5)
+    Picture = Picture["sonido.png"]
+  }
+  { Label6 Label
+    MoveScaled(24,49,14,3)
+    Text = ("(On / Off)")
+    Alignment = Align.Center
+  }
+}
