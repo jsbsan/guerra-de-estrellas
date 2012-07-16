@@ -1,0 +1,56 @@
+' Gambas class file
+
+Property tag As Variant
+Private htag As Variant
+
+'
+Property ruta As String
+Private hruta As String
+
+Property pos As ClassPosicion
+Private hpos As New ClassPosicion
+
+Private Function ruta_Read() As String
+
+    Return hruta
+
+End
+
+Private Sub ruta_Write(Value As String)
+
+    hruta = value
+
+End
+
+Private Function pos_Read() As ClassPosicion
+
+    Return hpos
+
+End
+
+Private Sub pos_Write(Value As ClassPosicion)
+
+    hpos = value
+
+End
+
+Private Function tag_Read() As Variant
+
+    Return htag
+
+End
+
+Private Sub tag_Write(Value As Variant)
+
+    htag = value
+
+End
+
+Public Sub _new(ruta As String, posx As Integer, posy As Integer, Optional tag As String)
+
+    hruta = ruta
+    hpos.x = posx
+    hpos.y = posy
+    htag = tag
+
+End

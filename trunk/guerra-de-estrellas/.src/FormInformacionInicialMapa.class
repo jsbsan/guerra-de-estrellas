@@ -1,0 +1,10 @@
+' Gambas class file
+
+Public descripcion As String
+
+Public Sub Form_Open()
+
+    TextLabel1.text = descripcion
+    Me.caption = "Informacion"
+
+End

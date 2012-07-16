@@ -1,0 +1,51 @@
+' Gambas class file
+
+Public Sub guardar(partida As ClassPartida, nombrearchivo As String)
+
+    Dim salida As String
+    Dim planetatemp As ClassPlaneta
+    Dim conexiontemp As ClassConexion
+    Dim xml As XmlWriter
+
+    xml = New XmlWriter
+
+    xml.Open("", True)
+
+    xml.StartElement("GuerraDeEstrellas", ["version", "0.1"])
+
+    For Each planetatemp In partida.mapa.array_planetas
+        xml.StartElement("Planetas")
+        xml.Element("Indice", Str$(planetatemp.indice))
+        xml.Element("Pos.x", Str$(planetatemp.pos.x))
+        xml.Element("Pos.y", Str$(planetatemp.pos.y))
+        xml.Element("Organizacion", Str$(planetatemp.organizacion))
+        xml.Element("tipo", Str$(planetatemp.tipo))
+        xml.Element("numeroNaves", Str$(planetatemp.numeroNaves))
+        xml.EndElement()
+
+    Next
+
+    For Each conexiontemp In partida.mapa.array_conexion
+        xml.StartElement("Conexiones")
+        xml.Element("ptoAindice", Str$(conexiontemp.ptoAindice))
+        xml.Element("orgA", Str$(conexiontemp.orgA))
+
+        xml.Element("ptoBindice", Str$(conexiontemp.ptoBindice))
+        xml.Element("orgB", Str$(conexiontemp.orgB))
+        xml.EndElement()
+
+    Next
+
+    xml.StartElement("TextoDescriptivo")
+    xml.Element("Texto", partida.mapa.texto_descriptivo)
+    xml.EndElement()
+
+    salida = xml.EndDocument()
+
+    'el xml.open(nombre,true), no me genera el archivo, no se porque ?¿
+    '  Print nombrearchivo
+    ' Print salida
+    File.Save(nombrearchivo, salida)
+    ' da problemas no lo guarda completo: xml.Open(nombrearchivo & "1.xml", True)
+
+End

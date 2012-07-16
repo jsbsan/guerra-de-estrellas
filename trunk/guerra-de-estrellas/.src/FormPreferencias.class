@@ -1,0 +1,174 @@
+' Gambas class file
+
+Public Sub ToolButtonAceptar_Click()
+
+    '    If RadioButtonFondonormal.value = True Then
+    '       FMain.fondo = User.home & "/guerraestrellas/imagenes/FondoGris.jpg"
+    '    Endif
+
+    '    If RadioButtonFondonormal.value = True Then
+    '        FMain.fondo = User.home & "/guerraestrellas/imagenes/FondoEstrellas.jpg"
+    '    Endif
+
+    ValueBoxRejilla.value = FMain.valor_rejilla
+
+    Me.Close()
+
+End
+
+Public Sub RadioButtonPlanetaRelleno_Click()
+
+    If RadioButtonPlanetaRelleno.value = True Then
+        FMain.modorellenoplaneta = "relleno"
+    Else
+        FMain.modorellenoplaneta = "simple"
+    Endif
+
+End
+
+Public Sub RadioButtonPlanetaAlambre_Click()
+
+    If RadioButtonPlanetaRelleno.value = True Then
+        FMain.modorellenoplaneta = "simple"
+    Else
+        FMain.modorellenoplaneta = "relleno"
+    Endif
+
+End
+
+Public Sub RadioButtonExploSi_Click()
+
+    If RadioButtonExploSi.value = True Then
+        FMain.controlexplosiones = True
+    Else
+        FMain.controlexplosiones = False
+    Endif
+
+End
+
+Public Sub Form_Open()
+    'rejilla valor de separaciones
+
+    ValueBoxRejilla.value = FMain.valor_rejilla
+
+    'explosiones (si/no)
+    If FMain.controlexplosiones = True Then
+        RadioButtonExploNO.value = False
+        RadioButtonExploSi.value = True
+    Else
+        RadioButtonExploNO.value = True
+        RadioButtonExploSi.value = False
+
+    Endif
+
+    'rellono de planetas
+    If FMain.modorellenoplaneta = "simple" Then
+        RadioButtonPlanetaRelleno.value = False
+        RadioButtonPlanetaAlambre.value = True
+    Else
+        RadioButtonPlanetaRelleno.value = True
+        RadioButtonPlanetaAlambre.value = False
+    Endif
+
+    'fondo
+    If FMain.fondo = User.home & "/guerraestrellas/imagenes/FondoEstrellas.jpg" Then
+        RadioButtonFondonormal.value = False
+        RadioButtonFondoEstrellas.value = True
+        FMain.Activada_Rejilla = False
+    Else
+        RadioButtonFondonormal.value = True
+        RadioButtonFondoEstrellas.value = False
+
+    Endif
+
+End
+
+Public Sub RadioButtonExploNO_Click()
+
+    If RadioButtonExploNO.value = True Then
+        FMain.controlexplosiones = False
+    Else
+        FMain.controlexplosiones = True
+    Endif
+
+End
+
+Public Sub PictureBoxPlanetaAlambre_MouseDown()
+
+    RadioButtonPlanetaAlambre.value = True
+    FMain.modorellenoplaneta = "simple"
+
+End
+
+Public Sub PictureBoxPlanetaRelleno_MouseDown()
+
+    RadioButtonPlanetaRelleno.value = True
+    FMain.modorellenoplaneta = "relleno"
+
+End
+
+Public Sub PictureBoxConSonido_MouseDown()
+
+    RadioButtonExploSi.value = True
+    FMain.controlexplosiones = True
+
+End
+
+Public Sub PictureBoxSinSonido_MouseDown()
+
+    RadioButtonExploNO.value = True
+    FMain.controlexplosiones = False
+
+End
+
+Public Sub RadioButtonFondonormal_Click()
+
+    RadioButtonFondonormal.value = True
+    FMain.fondo = User.home & "/guerraestrellas/imagenes/FondoGris.jpg"
+    FMain.Activada_Rejilla = False
+
+End
+
+Public Sub RadioButtonFondoEstrellas_Click()
+
+    RadioButtonFondoEstrellas.value = True
+    FMain.fondo = User.home & "/guerraestrellas/imagenes/FondoEstrellas.jpg"
+    FMain.Activada_Rejilla = False
+
+End
+
+Public Sub ValueBoxRejilla_KeyPress()
+
+    If Key.code = Key.Enter Or Key.code = Key.Return Then
+        FMain.valor_rejilla = ValueBoxRejilla.value
+    Endif
+
+End
+
+Public Sub ToolButtonCancelar_Click()
+
+    Me.close
+
+End
+
+Public Sub RadioButtonFondoCuadricula_Click()
+
+    FMain.fondo = FMain.fondoBn
+    FMain.Activada_Rejilla = True
+
+End
+
+Public Sub ToolButtonSonido_Click()
+
+    If fmain.sonidoactivado = True Then
+        fmain.sonidoactivado = False
+        ToolButtonSonido.Picture = picture["sonidobn.png"]
+        ToolButtonSonido.Picture = picture["sonidobn.png"]
+    Else
+        fmain.sonidoactivado = True
+        ToolButtonSonido.Picture = picture["sonido.png"]
+        ToolButtonSonido.Picture = picture["sonido.png"]
+    Endif
+
+
+End

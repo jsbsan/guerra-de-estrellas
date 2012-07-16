@@ -1,0 +1,45 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,30,21)
+  Icon = Picture["planeta.png"]
+  { LabelOrg Label
+    MoveScaled(0,0,13,5)
+    Text = ("Organizacion:")
+    Alignment = Align.Right
+  }
+  { LabelTipo Label
+    MoveScaled(1,5,12,5)
+    Text = ("Tamaño:")
+    Alignment = Align.Right
+  }
+  { ToolButtonAceptar ToolButton
+    MoveScaled(16,17,13,3)
+    Text = ("Aceptar")
+    Picture = Picture["icon:/32/apply"]
+    Border = True
+  }
+  { ToolButtonCancelar ToolButton
+    MoveScaled(1.125,16.875,14,3)
+    Text = ("Cancelar")
+    Picture = Picture["icon:/32/cancel"]
+    Border = True
+  }
+  { ComboBoxOrg ComboBox
+    MoveScaled(15,1,15,3)
+    ReadOnly = True
+    Text = ("Neutro")
+  }
+  { ComboBoxTip ComboBox
+    MoveScaled(15,6,15,3)
+    ReadOnly = True
+    Text = ("Pequeño")
+  }
+  { Label1Tropas Label
+    MoveScaled(1,10,14,5)
+    Text = ("Tropas Iniciales:")
+  }
+  { SpinBoxTropasIniciales SpinBox
+    MoveScaled(15,11,14,3)
+  }
+}

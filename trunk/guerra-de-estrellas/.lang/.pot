@@ -1,0 +1,346 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2002-11-01 04:27+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .project:1
+msgid "GuerraEntreEstrellas2"
+msgstr ""
+
+#: .project:2
+msgid ""
+"010:\n"
+"Paso a la version Gambas3.2, errores en la lectura de archivos .xml "
+"corregidos\n"
+"\n"
+"\n"
+"009:\n"
+"Mejoras en el marcador y  pagina web con contador de descargas\n"
+"Ya se puede ejecutar .Gambas\n"
+"Mejoras en las Preferencias (dibujar cuadricula)\n"
+"Correccion de bugs de preferencias\n"
+"\n"
+"008:\n"
+"Mejoras en la traduccion..\n"
+"En los tutoriales tambien se ha incluido el texto introducido en ingles\n"
+"Comparto los archivos en formato .tar.gz\n"
+"Algunas mejoras en el marcador\n"
+"\n"
+"007:\n"
+"Incluidas traducciones: Ingles, Frances, Aleman e Italiano \n"
+"(por el google traduce...)\n"
+"Al archivo eje.bin, se le dan los permisos de ejecucion automaticamente.\n"
+"Para facilitar la realizacion de mapas se ha añadido un boton para generar  "
+"una rejilla\n"
+"Corregido problema de borrado de conexiones. (no las encontraba)\n"
+"\n"
+"0.0.6\n"
+"Error cuando el tutorial se termina, fallaba la edicion de mapas...\n"
+"Añadido \"compartir mapas\", con ejecutable eje.bin... (hay que darle "
+"permisos de ejecucion)\n"
+"\n"
+"\n"
+"0.0.5\n"
+"Corregido el error de hacer click en pantalla mientras no se jugaba.\n"
+"Corregido cuando no encontraba el planeta al hacer click.\n"
+"Corregido \"naves\" que no morian al pasar de un tutorial a otro.\n"
+"\n"
+"\n"
+"Revision 0.0.1\n"
+"Inteligencia Artificial 2\n"
+"Añadido guardar y abrir, en formato XML\n"
+"Añadido 4 tutoriales"
+msgstr ""
+
+#: FMain.form:52
+msgid "Mensajes: Pulse F1 para abrir ayuda online..."
+msgstr ""
+
+#: FMain.form:63
+msgid "Nueva Partida"
+msgstr ""
+
+#: FMain.form:70
+msgid "Guardar Como..."
+msgstr ""
+
+#: FMain.form:77
+msgid "Guardar Partida"
+msgstr ""
+
+#: FMain.form:83
+msgid "A jugar..."
+msgstr ""
+
+#: FMain.form:89
+msgid "Fin Juego "
+msgstr ""
+
+#: FMain.form:107
+msgid "Editor de Mapas"
+msgstr ""
+
+#: FMain.form:119
+msgid "Preferencias"
+msgstr ""
+
+#: FMain.form:125
+msgid "Informacion"
+msgstr ""
+
+#: FMain.form:131
+msgid "Compartir un mapa con la comunidad"
+msgstr ""
+
+#: FMain.form:138
+msgid "Abrir Partida"
+msgstr ""
+
+#: FMain.form:150
+msgid "Rejilla: Facilita la realizacion de Tableros"
+msgstr ""
+
+#: FMain.form:161
+msgid "Texto explicativo para el mapa"
+msgstr ""
+
+#: FMain.form:167
+msgid "Crear Planeta"
+msgstr ""
+
+#: FMain.form:173
+msgid "Crear Ruta"
+msgstr ""
+
+#: FMain.form:179
+msgid "Borra"
+msgstr ""
+
+#: FMain.form:185
+msgid "Edita"
+msgstr ""
+
+#: FMain.form:191
+msgid "Cancela Operacion"
+msgstr ""
+
+#: FMain.form:201
+msgid "Nuevo Mapa"
+msgstr ""
+
+#: FMain.form:207
+msgid "Abre Mapa"
+msgstr ""
+
+#: FMain.form:213
+msgid "Guarda Mapa"
+msgstr ""
+
+#: FMain.form:223
+msgid "Fin del editor"
+msgstr ""
+
+#: FMain.form:235
+msgid "Anula o Activa el Sonido"
+msgstr ""
+
+#: FMain.form:242
+msgid "Inicia el juego, si lo has parado"
+msgstr ""
+
+#: FMain.form:248
+msgid "Parada del juego"
+msgstr ""
+
+#: FMain.class:148
+msgid " Creando Mapa: Puede crear planetas y rutas "
+msgstr ""
+
+#: FMain.class:158
+msgid " No puedo dibujar un planeta, mientres que este dibujando conexiones.."
+msgstr ""
+
+#: FMain.class:165
+msgid " Pulse donde ira el planeta..."
+msgstr ""
+
+#: FMain.class:222
+msgid "Elige el planeta destino de tus naves..."
+msgstr ""
+
+#: FMain.class:315
+msgid "Mensaje: Esperando nueva orden..."
+msgstr ""
+
+#: FMain.class:364
+msgid "Planeta no encontrado, pruebe otra vez"
+msgstr ""
+
+#: FMain.class:366
+msgid "Pulse el 2º planeta"
+msgstr ""
+
+#: FMain.class:377
+msgid " Pulse el 1º planeta para la conexion..."
+msgstr ""
+
+#: FMain.class:537
+msgid "jugando...."
+msgstr ""
+
+#: FMain.class:601
+msgid "Fin del juego..., elige otro nivel o create un mapa para jugar!!!"
+msgstr ""
+
+#: FMain.class:1000
+msgid "Editando mapa, puedes añadir planetas y conexiones"
+msgstr ""
+
+#: FMain.class:1008
+msgid ""
+"Haga click en una planeta  para editarlo (las conexiones sole se pueden "
+"borrar)"
+msgstr ""
+
+#: FMain.class:1175
+msgid "Borrando elementos del mapa, puedes borrar planetas o conexiones"
+msgstr ""
+
+#: FMain.class:1307
+msgid "Desactivo rejilla"
+msgstr ""
+
+#: FMain.class:1316
+msgid "Activo rejilla"
+msgstr ""
+
+#: FMain.class:1346
+msgid "Cancelada operacion"
+msgstr ""
+
+#: FormJugador.form:19
+msgid "Jugar Tutorial 1"
+msgstr ""
+
+#: FormJugador.form:26
+msgid "Jugar Tutorial 2"
+msgstr ""
+
+#: FormJugador.form:33
+msgid "Jugar Tutorial 3"
+msgstr ""
+
+#: FormJugador.form:40
+msgid "Jugar Tutorial 4"
+msgstr ""
+
+#: FormJugador.form:47
+msgid "Campañas"
+msgstr ""
+
+#: FormJugador.form:55
+msgid "Partidas Guardadas"
+msgstr ""
+
+#: FormPlaneta.form:19
+msgid "Organizacion:"
+msgstr ""
+
+#: FormPlaneta.form:25
+msgid "Tamaño:"
+msgstr ""
+
+#: FormPlaneta.form:31 FormTextoDescriptivo.form:32
+msgid "Aceptar"
+msgstr ""
+
+#: FormPlaneta.form:38 FormPreferencias.form:154 FormTextoDescriptivo.form:25
+msgid "Cancelar"
+msgstr ""
+
+#: FormPlaneta.form:46
+msgid "Neutro"
+msgstr ""
+
+#: FormPlaneta.form:52
+msgid "Pequeño"
+msgstr ""
+
+#: FormPlaneta.form:57
+msgid "Tropas Iniciales:"
+msgstr ""
+
+#: FormPreferencias.form:36
+msgid "<h1>Preferencias</h1>"
+msgstr ""
+
+#: FormPreferencias.form:42
+msgid "Salir"
+msgstr ""
+
+#: FormPreferencias.form:50
+msgid "En esta pantalla, configuramos el programa"
+msgstr ""
+
+#: FormPreferencias.form:60
+msgid "Planetas"
+msgstr ""
+
+#: FormPreferencias.form:92
+msgid "Explosiones (activarlas o que no se vean)"
+msgstr ""
+
+#: FormPreferencias.form:123
+msgid "Fondo"
+msgstr ""
+
+#: FormPreferencias.form:128
+msgid "Por defecto"
+msgstr ""
+
+#: FormPreferencias.form:134
+msgid "Estrellas"
+msgstr ""
+
+#: FormPreferencias.form:139
+msgid "Cuadricula"
+msgstr ""
+
+#: FormPreferencias.form:145
+msgid "Rejilla:"
+msgstr ""
+
+#: FormPreferencias.form:161
+msgid "Sonido:"
+msgstr ""
+
+#: FormPreferencias.form:171
+msgid "(On / Off)"
+msgstr ""
+
+#: FormPresentacion.form:22
+msgid "Realizado en gambas3.1.1"
+msgstr ""
+
+#: FormPresentacion.form:29
+msgid "Pulse para visitar pagina de publicidad y empezar el juego"
+msgstr ""
+
+#: FormPresentacion.form:34
+msgid "Autor: Julio Sanchez  Berro. Version  Beta X.X.X. Licencia GPL 3.0"
+msgstr ""
+
+#: FormTextoDescriptivo.form:39
+msgid "Visualizar"
+msgstr ""
+
+#: FormTextoDescriptivo.form:40
+msgid "Muestra el texto en formato etiqueta html"
+msgstr ""

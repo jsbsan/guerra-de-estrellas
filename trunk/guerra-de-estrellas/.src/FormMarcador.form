@@ -1,0 +1,12 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,56.25,20,33)
+  Icon = Picture["torneo.jpg"]
+  Border = False
+  { DrawingAreaMarcador DrawingArea
+    MoveScaled(0,1,20,32)
+    Border = Border.Plain
+    Cached = True
+  }
+}

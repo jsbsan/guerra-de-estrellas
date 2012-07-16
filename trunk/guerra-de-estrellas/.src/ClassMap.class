@@ -1,0 +1,5 @@
+' Gambas class file
+
+Public array_planetas As New ClassPlaneta[]
+Public array_conexion As New ClassConexion[]
+Public texto_descriptivo As String

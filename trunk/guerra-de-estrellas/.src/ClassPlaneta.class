@@ -1,0 +1,120 @@
+' Gambas class file
+
+Public pos As New ClassPosicion
+Public organizacion As Integer ' 1 (blanco),2(azul),3(marron),4(Amarillo),5(rojo),6(verde)
+Public tipo As Integer '' 1 (pequeño), 2(mediano),3 (grande), 4 (gigante)
+Public numeroNaves As Integer 'numero de efectivos que hay en el planeta
+Public indice As Integer
+Public mensajes As New String[] 'mensajes que me mandan otros planetas de mi misma organizacion "R" "RR"
+'Public lucha As String 'tipo de planeta segun lucha "A","RA","RR","RRR"
+Public estado As String 'estado del planeta
+Public ultimodespeque As Date
+Private primeracaptura As Picture
+Public cambio As Boolean 'true: el planeta ha cambiado en el editor, false: el planeta no ha cambiado en el editor
+
+Public Function informacion() As String ''informacion general del planeta
+
+    Dim texto As String
+    Dim caracter_separador As String = "\n"
+
+    texto = Str$(indice) & caracter_separador 'voy a guardar el indice del planeta
+    texto &= Str$(pos.x) & caracter_separador
+    texto &= Str$(pos.y) & caracter_separador
+    texto &= Str$(organizacion) & caracter_separador
+    texto &= Str$(tipo) & caracter_separador
+    texto &= Str$(numeroNaves) & caracter_separador
+
+    Return texto
+
+End
+
+Public Sub colocar(x As Integer, y As Integer)
+
+    Me.pos.x = x
+    Me.pos.y = y
+
+End
+
+Public Function dibujaplaneta() As ClassTile
+
+    Dim ruta As String
+    Dim dist As Integer
+    Dim ht As ClassTile
+    Dim tag As String
+
+    dist = 15
+    If FMain.modorellenoplaneta = "simple" Then
+
+        Select tipo
+            Case 1
+                ruta = User.home & "/guerraestrellas/planetas/20x20/" & organizacion & ".png"
+
+            Case 2
+                ruta = User.home & "/guerraestrellas/planetas/32x32/" & organizacion & ".png"
+
+            Case 3
+                ruta = User.home & "/guerraestrellas/planetas/48x48/" & organizacion & ".png"
+
+            Case 4
+
+                ruta = User.home & "/guerraestrellas/planetas/" & organizacion & ".png"
+
+        End Select
+    Else
+        Select tipo
+            Case 1
+                ruta = User.home & "/guerraestrellas/planetasR/20x20/" & organizacion & "r.png"
+
+            Case 2
+                ruta = User.home & "/guerraestrellas/planetasR/32x32/" & organizacion & "r.png"
+
+            Case 3
+                ruta = User.home & "/guerraestrellas/planetasR/48x48/" & organizacion & "r.png"
+
+            Case 4
+
+                ruta = User.home & "/guerraestrellas/planetasR/grande/" & organizacion & "r.png"
+
+        End Select
+
+    Endif
+    '
+
+    tag = Str$(numeroNaves) & "/" & Str$(tipo) & "|" & Str$(dist)
+    ht = New Classtile(ruta, pos.x - Picture[ruta].w / 2, pos.y - Picture[ruta].h / 2, tag)
+    'ht.ruta = ruta
+    'ht.pos.x = pos.x - Picture[ruta].w / 2
+    'ht.pos.y = pos.y - Picture[ruta].h / 2
+
+    'draw.Picture(picture[ruta], pos.x - Picture[ruta].w / 2, pos.y - Picture[ruta].h / 2)
+    '   ruta = Application.Path & "/nave/32x32shuttle.png"
+    '  draw.Picture(picture[ruta], pos.x - Picture[ruta].w / 2, pos.y - Picture[ruta].h / 2)
+
+    'dibujo leyenda
+
+    'draw.Font.Size = "8"
+
+    'ht.tag = ruta & "|" & dist
+
+    'draw.FillRect(pos.x, pos.y - dist, Draw.TextWidth(ruta), draw.TextHeight(ruta), Color.DarkBlue)
+    'draw.Foreground = Color.white
+    'draw.Text(ruta, pos.x, pos.y - dist)
+    Return ht
+
+End
+
+Public Sub dentro(x As Integer, y As Integer) As ClassPlaneta 'me devuelve a mi mismo o nulo sino esta dentro el click
+
+    If x < (pos.x + 25) And x > (pos.x - 25) And y < (pos.y + 25) And y > (pos.y - 25) Then
+        Return Me
+    Else
+        Return Null
+    Endif
+
+End
+
+Public Sub incrementafuerzas()
+
+    numeroNaves += tipo
+
+End

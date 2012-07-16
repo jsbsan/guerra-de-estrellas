@@ -1,0 +1,62 @@
+' Gambas class file
+
+'
+'
+
+Property escribe As Boolean
+
+Private hescribe As Boolean
+
+Property valor As Float
+Private hvalor As Float
+Property colores As Integer
+Private hcolores As Integer
+
+Private Function colores_Read() As Integer
+
+    Return hcolores
+
+End
+
+Private Sub colores_Write(Value As Integer)
+
+    hcolores = value
+
+End
+
+Private Function valor_Read() As Float
+
+    Return hvalor
+
+End
+
+Private Sub valor_Write(Value As Float)
+
+    hvalor = value
+
+End
+
+Public Sub _new(a As Integer) ''a es el color
+
+    hcolores = a
+
+End
+
+Public Sub regla(maximo As Float, largo As Float) As Float
+
+    If maximo <> 0 Then Return (hvalor * largo / maximo)
+    Return 0
+
+End
+
+Private Function escribe_Read() As Boolean
+
+    Return hescribe
+
+End
+
+Private Sub escribe_Write(Value As Boolean)
+
+    hescribe = value
+
+End

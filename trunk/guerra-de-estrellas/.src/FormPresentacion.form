@@ -1,0 +1,27 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,62)
+  Icon = Picture["resizer.png"]
+  { PictureBox1 PictureBox
+    MoveScaled(4,2,54,43)
+    Picture = Picture["guerradeestrellas.png"]
+  }
+  { Label1 Label
+    MoveScaled(14,57,35,4)
+    Font = Font["Underline"]
+    Foreground = &H0000FF&
+    Text = ("Realizado en gambas3.1.1")
+    Alignment = Align.Center
+    Border = Border.Plain
+  }
+  { Button1 Button
+    MoveScaled(1,51,61,5)
+    Text = ("Pulse para visitar pagina de publicidad y empezar el juego")
+  }
+  { Label2 Label
+    MoveScaled(0,45,61,4)
+    Text = ("Autor: Julio Sanchez  Berro. Version  Beta X.X.X. Licencia GPL 3.0")
+    Alignment = Align.Center
+  }
+}

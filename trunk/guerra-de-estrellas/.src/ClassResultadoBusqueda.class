@@ -1,0 +1,30 @@
+' Gambas class file
+
+Property objeto As Object '' objeto que se contiene
+Private hobjeto As Object
+Property resultado As Boolean ''true: encontrado, false: no encontrado
+Private hresultado As Boolean
+
+Private Function resultado_Read() As Boolean
+
+    Return hresultado
+
+End
+
+Private Sub resultado_Write(Value As Boolean)
+
+    hresultado = Value
+
+End
+
+Private Function objeto_Read() As Object
+
+    Return hobjeto
+
+End
+
+Private Sub objeto_Write(Value As Object)
+
+    hobjeto = Value
+
+End

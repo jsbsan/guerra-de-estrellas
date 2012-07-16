@@ -1,0 +1,200 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,107,71)
+  Icon = Picture["resizer.png"]
+  Resizable = False
+  { TextLabelMensaje TextLabel
+    MoveScaled(1,1,88,4)
+    Text = ("Mensajes: Pulse F1 para abrir ayuda online...")
+    Alignment = Align.Center
+    Border = Border.Raised
+  }
+  { HBox2 HBox
+    MoveScaled(1,5,43,4)
+    { ToolButtonNuevo ToolButton
+      MoveScaled(0,0,5,4)
+      Visible = False
+      ToolTip = ("Nueva Partida")
+      Picture = Picture["icon:/32/new"]
+    }
+    { ToolButtonGuardaComo ToolButton
+      MoveScaled(1,0,5,4)
+      Visible = False
+      ToolTip = ("Guardar Como...")
+      Picture = Picture["icon:/32/save-as"]
+    }
+    { ToolButtonGuarda ToolButton
+      MoveScaled(2,0,5,4)
+      Visible = False
+      ToolTip = ("Guardar Partida")
+      Picture = Picture["icon:/32/save"]
+    }
+    { ToolButtonCrearPartida ToolButton
+      MoveScaled(8,0,3,4)
+      ToolTip = ("A jugar...")
+      Picture = Picture["icon:/22/access"]
+    }
+    { ToolButtonSepara2 ToolButton
+      MoveScaled(11,0,3,4)
+      ToolTip = ("Fin Juego ")
+      Border = True
+    }
+    { ToolButtonFin ToolButton
+      MoveScaled(14,0,5,4)
+      ToolTip = ("Fin Juego ")
+      Picture = Picture["icon:/32/quit"]
+    }
+    { ToolButtonSepara1 ToolButton
+      MoveScaled(19,0,3,4)
+      ToolTip = ("Fin Juego ")
+      Border = True
+    }
+    { ToolButtonEditor ToolButton
+      MoveScaled(21,0,5,4)
+      ToolTip = ("Editor de Mapas")
+      Picture = Picture["resizer.png"]
+    }
+    { ToolButtonSepara3 ToolButton
+      MoveScaled(26,0,3,4)
+      ToolTip = ("Fin Juego ")
+      Border = True
+    }
+    { ToolButtonEditor2 ToolButton
+      MoveScaled(28,0,5,4)
+      ToolTip = ("Preferencias")
+      Picture = Picture["icon:/22/menu"]
+    }
+    { ToolButtonUpdate ToolButton
+      MoveScaled(33,0,5,4)
+      ToolTip = ("Informacion")
+      Picture = Picture["icon:/22/info"]
+    }
+    { ToolButtonCompartir ToolButton
+      MoveScaled(38,0,5,4)
+      ToolTip = ("Compartir un mapa con la comunidad")
+      Picture = Picture["compartir.png"]
+    }
+    { ToolButtonAbrir ToolButton
+      MoveScaled(1,0,5,4)
+      Visible = False
+      ToolTip = ("Abrir Partida")
+      Picture = Picture["icon:/32/open"]
+    }
+  }
+  { HBoxEditorMapa HBox
+    MoveScaled(44,5,61,4)
+    Visible = False
+    Background = &H3FCFFF&
+    { ToolButtonRejilla ToolButton
+      MoveScaled(-1,0,5,4)
+      ToolTip = ("Rejilla: Facilita la realizacion de Tableros")
+      Picture = Picture["rejillamas.jpg"]
+      Radio = True
+    }
+    { ToggleButton3 ToggleButton
+      MoveScaled(4,0,2,4)
+    }
+    { ToolButtonTexto ToolButton
+      MoveScaled(4,0,5,4)
+      ToolTip = ("Texto explicativo para el mapa")
+      Picture = Picture["icon:/32/text-italic"]
+    }
+    { ToolButtonPlaneta ToolButton
+      MoveScaled(8,0,5,4)
+      ToolTip = ("Crear Planeta")
+      Picture = Picture["planeta.png"]
+    }
+    { ToolButtonConexion ToolButton
+      MoveScaled(12,0,5,4)
+      ToolTip = ("Crear Ruta")
+      Picture = Picture["ruta.png"]
+    }
+    { ToolButtonBorra ToolButton
+      MoveScaled(16,0,5,4)
+      ToolTip = ("Borra")
+      Picture = Picture["icon:/32/delete"]
+    }
+    { ToolButtonEdita ToolButton
+      MoveScaled(20,0,5,4)
+      ToolTip = ("Edita")
+      Picture = Picture["icon:/32/edit"]
+    }
+    { ToolButtonCancelaOperacion ToolButton
+      MoveScaled(26,0,5,4)
+      ToolTip = ("Cancela Operacion")
+      Picture = Picture["icon:/32/cancel"]
+    }
+    { ToggleButton2 ToggleButton
+      MoveScaled(32,0,2,4)
+    }
+    { ToolButtonAbre2 ToolButton
+      MoveScaled(33,0,5,4)
+      ToolTip = ("Nuevo Mapa")
+      Picture = Picture["icon:/22/new"]
+    }
+    { ToolButtonAbre ToolButton
+      MoveScaled(36,0,5,4)
+      ToolTip = ("Abre Mapa")
+      Picture = Picture["icon:/22/open"]
+    }
+    { ToolButtonSalva ToolButton
+      MoveScaled(39,0,5,4)
+      ToolTip = ("Guarda Mapa")
+      Picture = Picture["icon:/22/save"]
+    }
+    { ToggleButton1 ToggleButton
+      MoveScaled(43,0,2,4)
+    }
+    { ToolButtonFinEditor ToolButton
+      MoveScaled(46,0,4,4)
+      ToolTip = ("Fin del editor")
+      Picture = Picture["icon:/22/stop"]
+    }
+  }
+  { HBoxControlJuego HBox
+    MoveScaled(91,0,16,4)
+    Enabled = False
+    Background = &HFFAF5F&
+    { ToolButtonSonido ToolButton
+      MoveScaled(1,0,4,4)
+      ToolTip = ("Anula o Activa el Sonido")
+      Picture = Picture["sonido.png"]
+    }
+    { ToolButtonInicia ToolButton
+      MoveScaled(6,0,4,4)
+      Enabled = False
+      ToolTip = ("Inicia el juego, si lo has parado")
+      Picture = Picture["icon:/22/play"]
+    }
+    { ToolButtonPararJuego ToolButton
+      MoveScaled(11,0,4,4)
+      ToolTip = ("Parada del juego")
+      Picture = Picture["icon:/22/stop"]
+    }
+  }
+  { TimerPartida #Timer
+    #MoveScaled(83,-1)
+    Delay = 21
+  }
+  { DrawingArea1 DrawingArea
+    MoveScaled(0,10,105,60)
+    Border = Border.Raised
+    Cached = True
+    { TimerPlanetas #Timer
+      #MoveScaled(84,0)
+    }
+    { TimerNaves #Timer
+      #MoveScaled(77,0)
+      Delay = 67
+    }
+    { TimerExplosiones #Timer
+      #MoveScaled(69,0)
+      Delay = 37
+    }
+  }
+  { TimerIA #Timer
+    #MoveScaled(75,-1)
+    Delay = 1111
+  }
+}

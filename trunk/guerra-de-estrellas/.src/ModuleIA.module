@@ -1,0 +1,262 @@
+' Gambas module file
+
+Fast Public Sub IA(partida As ClassPartida)
+
+    Dim planetaTemp As ClassPlaneta
+    Dim planetaTempB As ClassPlaneta
+
+    Dim naveTemp As ClassNave
+
+    Dim conexiontemp As ClassConexion
+
+    Dim conexionPosibles As New ClassConexion[]
+    Dim orgAtemp As Integer
+    Dim ptoAindicetemp As Integer
+
+    'construyo lista de planetas amigos / enemigos.
+
+    Dim listaEnemigos As New ClassPlaneta[]
+    Dim listaAmigos As New ClassPlaneta[]
+    Dim planetaEnemigo As ClassPlaneta
+    Dim planetaAmigo As ClassPlaneta
+    Dim puntuacion As Integer
+
+    Dim a As Integer
+    Dim mensajetemp As String
+    Dim orden As New String[]
+    Dim ptomax As Integer
+    Dim nivel As Integer
+    Dim planetaAtacarDefender As ClassPlaneta
+    Dim cadena As New String[]
+    Dim niveltemporal As Integer
+    '---------------------------------------------------------------------
+    'por cada planeta estudio los planetas que estan con el conectado
+    '---------------------------------------------------------------------
+    '  Print "--------------------------------------------------------------------------------- "
+    For Each planetaTemp In partida.mapa.array_planetas
+        'jugada posible depende de las conexiones del planeta...
+        conexionPosibles = New ClassConexion[] 'inicio las conexiones posibles
+
+        listaEnemigos = New Classplanetas[]
+        listaAmigos = New Classplanetas[]
+
+        planetaAtacarDefender = New ClassPlaneta
+        ptomax = 0
+        '---------------------------------------------------
+        ''solo pienso en los colores que no son del jugador
+        '---------------------------------------------------
+
+        If partida.jugador.organizacion <> planetatemp.organizacion Then
+            '-------------------------------------
+            ''obtengo los planetas que se conectan
+            '-------------------------------------
+            For Each conexiontemp In partida.mapa.array_conexion
+                'veo que lado de la conexion esta el planeta
+                If conexiontemp.ptoA = planetatemp Then
+                    If conexiontemp.ptoB.organizacion = planetaTemp.organizacion Then
+                        listaAmigos.Add(conexiontemp.ptoB)
+                    Else
+                        listaEnemigos.Add(conexiontemp.ptoB)
+                    Endif
+                Endif
+                If conexiontemp.ptoB = planetatemp Then
+                    If conexiontemp.ptoA.organizacion = planetaTemp.organizacion Then
+                        listaAmigos.Add(conexiontemp.ptoA)
+                    Else
+
+                        listaEnemigos.Add(conexiontemp.ptoA)
+                    Endif
+                Endif
+            Next
+            'he repasado todas las conexion, ahora hago la lista de planetas Enemigos / Amigos...
+
+            '       Print "Planeta: "; planetatemp
+            '       Print "Amigos:"
+            '       For a = 0 To listaamigos.count - 1
+            '            Print listaamigos[a]
+            '         Next
+            '       Print "Enemigos:"
+            '        For a = 0 To listaEnemigos.count - 1
+            '           Print listaEnemigos[a]
+            '      Next
+
+            '
+            '---------------------------------------------
+            ''analizo las jugadas de ataque...
+            '---------------------------------------------
+
+            For Each planetaEnemigo In listaEnemigos
+                'se puede atacar...
+
+                puntuacion = 1000 * planetaEnemigo.tipo - planetaEnemigo.numeroNaves 'cuantos valor tenga de planeta
+                If puntuacion >= ptomax Then
+                    ptomax = puntuacion
+                    planetatemp.estado = "1" & "|" & Str$(ptomax)
+                    planetaAtacarDefender = partida.mapa.array_planetas[partida.mapa.array_planetas.Find(planetaEnemigo)]
+                    planetaAtacarDefender.indice = partida.mapa.array_planetas[partida.mapa.array_planetas.Find(planetaEnemigo)].indice
+                    planetaAtacarDefender.pos = partida.mapa.array_planetas[partida.mapa.array_planetas.Find(planetaEnemigo)].pos
+                Endif
+
+            Next
+
+            '---------------------------------------------------------------
+            'si no tengo enemigos, veo los planetas amigos, y su estado
+            '---------------------------------------------------------------
+
+            If listaEnemigos.count = 0 Then
+                'compruebo la lista de planetas amigos
+                nivel = 1
+                niveltemporal = 10
+                ptomax = -100000
+                a = 0
+                planetatemp.estado = ""
+                While (nivel < 10)
+                    For Each planetaAmigo In listaAmigos
+
+                        If planetaAmigo.estado <> "" Then
+                            cadena = Split(planetaAmigo.estado, "|")
+                            '   Print cadena[0], niveltemporal
+                            If Val(cadena[0]) <= nivel Then
+
+                                If ptomax <= Val(cadena[1]) Then
+                                    ptomax = Val(cadena[1])
+                                    planetatemp.estado = Str$(Val(cadena[0]) + 1) & "|" & Str$(ptomax) 'pongo mi estado, como me quedaria. (para el siguiente analisis de planetas)
+                                    planetaAtacarDefender = partida.mapa.array_planetas[partida.mapa.array_planetas.Find(planetaAmigo)] 'es este caso le mando tropas
+                                    planetaAtacarDefender.indice = partida.mapa.array_planetas[partida.mapa.array_planetas.Find(planetaAmigo)].indice
+                                    planetaAtacarDefender.pos = partida.mapa.array_planetas[partida.mapa.array_planetas.Find(planetaAmigo)].pos
+
+                                    niveltemporal = Val(cadena[0])
+                                Endif
+
+                            Endif
+
+                        Endif
+                        '   Print "---------"
+                    Next
+                    nivel += 1
+                    If planetatemp.estado <> "" Then nivel = 20 'salgo del bucle porque yatengo un valor
+                Wend
+            Endif
+
+            If planetatemp.estado = "" Then
+                'Esto quiere decir que alrededor mia no hay ni planetas enemigos y los planetas amigos no estan haciendonada.
+                'no hago nada...
+                planetatemp.estado = "10|-10000"
+
+            Else
+                Wait 0.1
+                If planetatemp.numeroNaves > ((planetatemp.tipo * 2) + 10) Then
+                    'mando nave
+
+                    navetemp = New ClassNave(planetaTemp.pos, planetaAtacarDefender.pos, planetatemp.organizacion, planetatemp.numeronaves, planetatemp.indice, planetaAtacarDefender.indice)
+                    planetatemp.numeronaves = 0 ' planetatemp.numeronaves - ((planetatemp.tipo * 2) + 10)
+
+                    Try FMain.partida.naves.Add(navetemp)
+                    FMain.HacerSonido(FMain.despeguenave)
+                    'actualizo el ultimo lanzamiento
+                    planetaTemp.ultimodespeque = Now()
+                Endif
+            Endif
+        Endif      '
+
+    Next
+
+    'revisa los planetas que no sean del jugador
+    'si nº de naves >5 comprueba los planetas que se conectan a el,
+    'si hay planetas enemigos, lanza un ataque al que tenga menos naves. Manda un mensaje de Refuerzos "R" a planetas de la misma organizacion
+    'valora la jugada (puntuacion= tamañoplaneta x100-fuerza del planeta )
+    'Mira si ha recibodo un mensaje "R", manda uno "RR" .refuerzos de refuerzos. (puntau
+    'Si recibe un RR-> manda otro RR (comunica a todos los planetas ordenes de refuerzos de refuerzos)
+    'Evalua todas las posibilidades, actuando con la de mayor puntuacion
+
+End
+
+Public Sub IA2()
+
+    Dim planetaTemp As ClassPlaneta
+    Dim naveTemp As ClassNave
+    Dim lanzadoataque As Boolean
+    Dim conexiontemp As ClassConexion
+
+    For Each planetaTemp In FMain.partida.mapa.array_planetas
+        'reviso cada planeta
+        '
+        '
+        '  para planetas de distintas organizacion...veo si puedo lanzar ataque...
+        lanzadoataque = False
+
+        If FMain.partida.jugador.organizacion <> planetatemp.organizacion Then
+            'compruebo numero de naves que tengo para atacar...
+            If planetatemp.numeroNaves > ((planetatemp.tipo * 2) + 10) Then
+                'puedo mandar ataque
+                'mirar cada conexion a cada planeta, si es enemigo valorar fuerza, y elegir el de menor fuerza
+                For Each conexiontemp In FMain.partida.mapa.array_conexion
+                    If conexiontemp.ptoA = planetatemp Then
+                        If conexiontemp.ptoB.organizacion <> planetaTemp.organizacion And lanzadoataque = False Then
+                            'es atacable
+                            'enviar una nave a ese planeta
+                            'mandar mensaje de R a los planetas mismo
+                            navetemp = New ClassNave(planetaTemp.pos, conexiontemp.ptoB.pos, planetatemp.organizacion, planetatemp.numeronaves - 1, planetatemp.indice, conexiontemp.ptoB.indice)
+                            planetatemp.numeronaves = 1
+                            FMain.partida.naves.Add(navetemp)
+                            lanzadoataque = True 'he lanzado un ataque, ya no puedo lanzar mas
+                            FMain.HacerSonido(FMain.despeguenave)
+                            Continue 'paso a otro planeta
+                        Endif
+
+                    Endif
+
+                    If conexiontemp.ptoB = planetaTemp And lanzadoataque = False Then
+                        If conexiontemp.ptoA.organizacion <> planetaTemp.organizacion Then
+                            'es atacable
+                            'enviar una nave a ese planeta
+                            'mandar mensaje de R a los planetas mismo
+                            navetemp = New ClassNave(planetaTemp.pos, conexiontemp.ptoA.pos, planetatemp.organizacion, planetatemp.numeronaves - 1, planetatemp.indice, conexiontemp.ptoA.indice)
+                            planetatemp.numeronaves = 1
+                            FMain.partida.naves.Add(navetemp)
+                            lanzadoataque = True
+                            Continue 'paso a otro planeta
+                        Endif
+
+                    Endif
+
+                Next
+                'mando a los planetas amigos un mensaje de "Refuerzo"
+
+            Else
+                'no puedo mandar ataque
+                'miro si tengo mensajes del tipo "R" o "RR", y eligo el de mayor puntuacion...
+
+            Endif
+        Endif
+    Next
+
+    'revisa los planetas que no sean del jugador
+    'si nº de naves >5 comprueba los planetas que se conectan a el,
+    'si hay planetas enemigos, lanza un ataque al que tenga menos naves. Manda un mensaje de Refuerzos "R" a planetas de la misma organizacion
+    'valora la jugada (puntuacion= tamañoplaneta x100-fuerza del planeta )
+    'Mira si ha recibodo un mensaje "R", manda uno "RR" .refuerzos de refuerzos. (puntau
+    'Si recibe un RR-> manda otro RR (comunica a todos los planetas ordenes de refuerzos de refuerzos)
+    'Evalua todas las posibilidades, actuando con la de mayor puntuacion
+
+End
+
+Public Sub escribelistas(planeta As Classplaneta, listaEnemigos As ClassPlaneta[], listaAmigos As ClassPlaneta[])
+
+    Dim a As Integer
+
+    Print "--------------------------------------------"
+    Print "Planeta:", planeta
+    Print "--------------------------------------------"
+    Print "Lista de enemigos"
+    For a = 0 To listaEnemigos.count - 1
+
+        Print listaEnemigos[a].indice
+    Next
+    Print "Lista de amigos"
+    For a = 0 To listaamigos.count - 1
+
+        Print listaamigos[a].indice
+    Next
+
+End

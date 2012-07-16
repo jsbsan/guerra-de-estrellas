@@ -1,0 +1,6 @@
+' Gambas class file
+
+Public tipo As String 'A: ataque, R:peticion de refuerzos, RR:peticion de refuerzos2
+Public planeta As ClassPlaneta
+Public puntos As Integer
+Public indiceplaneta As Integer 'indice del planeta

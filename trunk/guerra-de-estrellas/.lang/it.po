@@ -1,0 +1,221 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2002-11-01 04:27+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .project:2
+msgid "007:\nIncluidas traducciones: Ingles, Frances, Aleman e Italiano \n(por el google traduce...)\n\n\n0.0.6\nError cuando el tutorial se termina, fallaba la edicion de mapas...\nAñadido \"compartir mapas\", con ejecutable eje.bin... (hay que darle permisos de ejecucion)\n\n\n0.0.5\nCorregido el error de hacer click en pantalla mientras no se jugaba.\nCorregido cuando no encontraba el planeta al hacer click.\nCorregido \"naves\" que no morian al pasar de un tutorial a otro.\n\nRevision 0.0.1\nInteligencia Artificial 2\nAñadido guardar y abrir, en formato XML\nAñadido 4 tutoriales"
+msgstr ""
+
+#: FMain.form:199
+msgid "Abre Mapa"
+msgstr "Apri la mappa"
+
+#: FMain.form:136
+msgid "Abrir Partida"
+msgstr "Apri elemento"
+
+#: FormPlaneta.form:31 FormTextoDescriptivo.form:32
+msgid "Aceptar"
+msgstr "accettare"
+
+#: FMain.form:81
+msgid "A jugar..."
+msgstr "Un gioco .."
+
+#: FMain.form:227
+msgid "Anula o Activa el Sonido"
+msgstr "Suono (on or off)"
+
+#: FormPresentacion.form:33
+msgid "Autor: Julio Sanchez  Berro. Version  Beta X.X.X. Licencia GPL 3.0"
+msgstr "autore: Julio Sanchez Berro, Version Beta X.X.X. Licenza: GPL 3.0"
+
+#: FMain.form:177
+msgid "Borra"
+msgstr "cancellare"
+
+#: FormJugador.form:47
+msgid "Campañas"
+msgstr "campagne"
+
+#: FormPlaneta.form:38 FormTextoDescriptivo.form:25
+msgid "Cancelar"
+msgstr "annullare"
+
+#: FMain.form:129
+msgid "Compartir un mapa con la comunidad"
+msgstr "Condividere una mappa con la comunità"
+
+#: FMain.form:165
+msgid "Crear Planeta"
+msgstr "Crea il pianeta"
+
+#: FMain.form:171
+msgid "Crear Ruta"
+msgstr "Crea percorso"
+
+#: FMain.form:183
+msgid "Edita"
+msgstr "Modifica"
+
+#: FMain.form:105
+msgid "Editor de Mapas"
+msgstr "Map Editor"
+
+#: FormPreferencias.form:42
+msgid "En esta pantalla, configuramos el programa"
+msgstr "In questa schermata, configurare il programma"
+
+#: FormPreferencias.form:125
+msgid "Estrellas"
+msgstr "stelle"
+
+#: FormPreferencias.form:83
+msgid "Explosiones (activarlas o que no se vean)"
+msgstr "Esplosioni (on or off)"
+
+#: FMain.form:215
+msgid "Fin del editor"
+msgstr "Fine di editor"
+
+#: FMain.form:87
+msgid "Fin Juego "
+msgstr "fine della partita"
+
+#: FormPreferencias.form:114
+msgid "Fondo"
+msgstr "fondo"
+
+#: FMain.form:205
+msgid "Guarda Mapa"
+msgstr "Salva mappa"
+
+#: FMain.form:68
+msgid "Guardar Como..."
+msgstr "Salva con nome"
+
+#: FMain.form:75
+msgid "Guardar Partida"
+msgstr "Guardia di avvio"
+
+#: .project:1
+msgid "GuerraEntreEstrellas2"
+msgstr "La guerra tra le stelle"
+
+#: FormPreferencias.form:29
+msgid "<h1>Preferencias</h1>"
+msgstr "<h1>Preferenze</h1>"
+
+#: FMain.form:123
+msgid "Informacion"
+msgstr "informazioni"
+
+#: FMain.form:234
+msgid "Inicia el juego, si lo has parado"
+msgstr "Avviare il gioco, se ti sei fermato"
+
+#: FormJugador.form:19
+msgid "Jugar Tutorial 1"
+msgstr "Gioca Tutorial 1"
+
+#: FormJugador.form:26
+msgid "Jugar Tutorial 2"
+msgstr "Gioca Tutorial 2"
+
+#: FormJugador.form:33
+msgid "Jugar Tutorial 3"
+msgstr "Gioca Tutorial 3"
+
+#: FormJugador.form:40
+msgid "Jugar Tutorial 4"
+msgstr "Gioca Tutorial 4"
+
+#: FMain.form:50
+msgid "Mensajes: Pulse F1 para abrir ayuda online..."
+msgstr "Posts: premere F1 per aprire la guida in linea ..."
+
+#: FormTextoDescriptivo.form:40
+msgid "Muestra el texto en formato etiqueta html"
+msgstr "Visualizza il testo in html"
+
+#: FormPlaneta.form:46
+msgid "Neutro"
+msgstr "Nuevo partida"
+
+#: FMain.form:61
+msgid "Nueva Partida"
+msgstr "Nuovo gioco"
+
+#: FMain.form:193
+msgid "Nuevo Mapa"
+msgstr "nuova mappa"
+
+#: FormPlaneta.form:19
+msgid "Organizacion:"
+msgstr "organizzazione"
+
+#: FMain.form:240
+msgid "Parada del juego"
+msgstr "Sospensione del gioco"
+
+#: FormJugador.form:55
+msgid "Partidas Guardadas"
+msgstr "Articoli salvati"
+
+#: FormPlaneta.form:52
+msgid "Pequeño"
+msgstr "Pequeño"
+
+#: FormPreferencias.form:52
+msgid "Planetas"
+msgstr "pianeti"
+
+#: FormPreferencias.form:119
+msgid "Por defecto"
+msgstr "per impostazione predefinita"
+
+#: FMain.form:117
+msgid "Preferencias"
+msgstr "preferenze"
+
+#: FormPresentacion.form:28
+msgid "Pulse para visitar pagina de publicidad y empezar el juego"
+msgstr "Clicca per visitare il sito web e avviare il gioco"
+
+#: FormPresentacion.form:21
+msgid "Realizado en gambas3.1.1"
+msgstr "Made in gambas3.1.1"
+
+#: FMain.form:149
+msgid "Rejilla: Facilita la realizacion de Tableros"
+msgstr "Grid: Fornisce il realiacion scheda"
+
+#: FormPreferencias.form:35
+msgid "Salir"
+msgstr "lasciare"
+
+#: FormPlaneta.form:25
+msgid "Tamaño:"
+msgstr "dimensione"
+
+#: FMain.form:159
+msgid "Texto explicativo para el mapa"
+msgstr "Testo esplicativo alla mappa"
+
+#: FormPlaneta.form:57
+msgid "Tropas Iniciales:"
+msgstr "Truppe iniziali:"
+
+#: FormTextoDescriptivo.form:39
+msgid "Visualizar"
+msgstr "visualizzare"
+

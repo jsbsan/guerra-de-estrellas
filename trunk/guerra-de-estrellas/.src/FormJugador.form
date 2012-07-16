@@ -1,0 +1,45 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,32,42)
+  Icon = Picture["icono jugador.png"]
+  Resizable = False
+  Arrangement = Arrange.Vertical
+  { ToolButtonTutos ToolButton
+    MoveScaled(0,0,32,7)
+    Text = ("Jugar Tutorial 1")
+    Picture = Picture["nave/32x32shuttle.png"]
+    Border = True
+  }
+  { ToolButtonTutos2 ToolButton
+    MoveScaled(0,7,32,7)
+    Text = ("Jugar Tutorial 2")
+    Picture = Picture["nave/32x32Rojo.png"]
+    Border = True
+  }
+  { ToolButtonTutos3 ToolButton
+    MoveScaled(0,14,32,7)
+    Text = ("Jugar Tutorial 3")
+    Picture = Picture["nave/32x32Azul.png"]
+    Border = True
+  }
+  { ToolButtonTutos4 ToolButton
+    MoveScaled(0,21,32,7)
+    Text = ("Jugar Tutorial 4")
+    Picture = Picture["nave/32x32Marron.png"]
+    Border = True
+  }
+  { ToolButtonCampana ToolButton
+    MoveScaled(0,28,32,7)
+    Text = ("Campañas")
+    Picture = Picture["nave/32x32Verde.png"]
+    Border = True
+  }
+  { ToolButtonCampana2 ToolButton
+    MoveScaled(0,35,32,7)
+    AutoResize = True
+    Text = ("Partidas Guardadas")
+    Picture = Picture["icon:/22/open"]
+    Border = True
+  }
+}

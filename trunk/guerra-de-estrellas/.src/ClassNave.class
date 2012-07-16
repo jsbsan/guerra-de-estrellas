@@ -1,0 +1,163 @@
+' Gambas class file
+
+Property tropas As Integer
+Private htropas As Integer
+
+Property posActual As ClassPosicion
+Private hposActual As ClassPosicion
+
+Public posOrigen As New ClassPosicion
+Public posDestino As New ClassPosicion
+
+Public organizacion As Integer ' 1 (blanco),2(azul),3(marron),4(Amarillo),5(rojo),6(verde)
+Private dx As Float
+Private dy As Float
+Public direccion As Integer 'indica como se ve la imagen a 0 grados direccion true, 180, direccion false
+Private angulo As Float  'angulo
+
+Property indiceplanetaorigen As Integer
+Private hindiceplanetaorigen As Integer
+
+Property indiceplanetadestino As Integer
+Private hindiceplanetadestino As Integer
+Private vueltas As Integer
+Private maximavuelta As Float
+
+Public Sub _new(hposOrigen As ClassPosicion, hposDestino As ClassPosicion, horganizacion As Integer, tropa As Integer, indiceOrigen As Integer, indiceDestino As Integer)
+
+    organizacion = horganizacion
+
+    Me.posDestino.x = hposDestino.x
+    Me.posDestino.y = hposDestino.y
+    Me.posOrigen.x = hposOrigen.x
+    Me.posOrigen.y = hposOrigen.y
+    hposActual = Me.posOrigen
+    htropas = tropa
+    'angulo = ATan2((hposDestino.x - hposOrigen.x), (hposDestino.y - hposOrigen.y))
+
+    maximavuelta = Sqr(((hposDestino.x - hposOrigen.x) ^ 2 + (hposDestino.y - hposOrigen.y) ^ 2))
+    dx = (hposDestino.x - hposOrigen.x) / (maximavuelta - 1)
+    dy = (hposDestino.y - hposOrigen.y) / (maximavuelta - 1)
+
+    hindiceplanetaorigen = indiceOrigen
+    hindiceplanetadestino = indiceDestino
+
+    If Me.posDestino.x > Me.posOrigen.x Then
+        direccion = 1
+
+    Else
+        direccion = 2
+    Endif
+
+End
+
+Public Sub desplaza() As Boolean ' si devuelve false, entonces hemos llegado
+
+    Dim llegadax As Boolean
+    Dim llegaday As Boolean
+
+    vueltas += 1
+    hposActual.x += dx
+    hposActual.y += dy
+
+    If vueltas > maximavuelta Then Return False 'he llegado al destino
+
+    Return True 'no hemos llegado
+
+End
+
+Public Function dibuja() As ClassTile
+
+    Dim ruta, final As String
+    Dim cuadro As New Picture
+    Dim htile As ClassTile
+    Dim contador As String
+    'draw.Begin(area)
+
+    'segun la  organizacion As Integer ' 1 (blanco),2(azul),3(marron),4(Amarillo),5(rojo),6(verde), elijo el color de la nave..
+    ruta = User.home & "/guerraestrellas/nave/"
+    ruta &= Choose(organizacion, "32x32shuttle", "32x32Azul", "32x32Marron", "32x32Amarillo", "32x32Rojo", "32x32Verde")
+    'segun el giro, por "R.png" o solo ".png"
+
+    ruta &= Choose(direccion, ".png", "R.png")
+
+    'cuadro = Picture[ruta]
+    'draw.Picture(Picture[ruta], posActual.x - cuadro.w / 2, posActual.y - cuadro.h / 2)
+    'draw.End
+
+    'hay que devolver tambien la cantidad de tropas que lleva la nave...
+    contador = Str$(htropas) & "|" & Str$(20)
+    htile = New ClassTile(ruta, hposActual.x, hposActual.y, contador)
+    Return htile
+
+End
+
+Private Function posActual_Read() As ClassPosicion
+
+    Return hposActual
+
+End
+
+Private Sub posActual_Write(Value As ClassPosicion)
+
+    hposActual = value
+
+End
+
+Private Function tropas_Read() As Integer
+
+    Return htropas
+
+End
+
+Private Sub tropas_Write(Value As Integer)
+
+    htropas = value
+
+End
+
+Private Function indiceplanetaorigen_Read() As Integer
+
+    Return hindiceplanetaorigen
+
+End
+
+Private Sub indiceplanetaorigen_Write(Value As Integer)
+
+    hindiceplanetaorigen = value
+
+End
+
+Private Function indiceplanetadestino_Read() As Integer
+
+    Return hindiceplanetadestino
+
+End
+
+Private Sub indiceplanetadestino_Write(Value As Integer)
+
+    hindiceplanetadestino = value
+
+End
+
+Public Function colision(pos As ClassPosicion) As Boolean
+
+    Dim r1 As New Rect
+    Dim r2 As New Rect
+
+    'las naves son cuadrados de 32x25 (mas o menos)
+    r1.X = hposActual.x
+    r1.W = 32
+    r1.Y = hposActual.y
+    r1.h = 25
+
+    r2.x = pos.x
+    r2.w = 32
+    r2.y = pos.y
+    r2.h = 25
+
+    If r1.Intersection(r2) = Null Then Return False
+    'existe un rectangulo de iterseccion, por lo tanto han colisionado..
+    Return True
+
+End

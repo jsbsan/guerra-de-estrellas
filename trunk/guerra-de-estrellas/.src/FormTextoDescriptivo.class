@@ -1,0 +1,35 @@
+' Gambas class file
+
+Public texto As String
+
+Public Sub Form_Open()
+
+    Me.Center
+    If texto = "" Then
+        TextArea1.text = ""
+    Else
+        TextArea1.text = texto
+
+    Endif
+
+End
+
+Public Sub ToolButtonVisualizar_Click()
+
+    TextLabel1.text = TextArea1.text
+
+End
+
+Public Sub ToolButtonCancelar_Click()
+
+    Me.Close
+
+End
+
+Public Sub ToolButtonAceptar_Click()
+
+    FMain.partida.mapa.texto_descriptivo = TextArea1.text
+
+    Me.Close
+
+End

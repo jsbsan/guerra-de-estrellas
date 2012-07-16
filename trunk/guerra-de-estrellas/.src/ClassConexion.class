@@ -1,0 +1,73 @@
+' Gambas class file
+
+Public ptoA As ClassPlaneta 'conexion planeta A
+Public ptoAindice As Integer
+Public ptoB As ClassPlaneta ' conexion planeta B
+Public ptoBindice As Integer
+
+Public orgA As Integer 'organizacion a la que pertenece planeta A
+Public orgB As Integer 'organizacion a la que pertenece planeta B
+
+Public Sub dibuja(area As DrawingArea)
+
+    draw.Begin(area)
+    If orgA = orgB Then
+        'mismo color linea
+
+        Select orgA
+                ' 1 (blanco),2(azul),3(marron),4(Amarillo),5(rojo),6(verde)
+            Case 1
+                draw.Foreground = Color.white 'blanco
+            Case 2
+                draw.Foreground = Color.Blue
+            Case 3
+                draw.Foreground = Color.Orange
+            Case 4
+                draw.Foreground = Color.Yellow
+            Case 5
+                draw.Foreground = Color.Red
+            Case 6
+                draw.Foreground = Color.Green
+        End Select
+        draw.LineStyle = Line.Dot
+        draw.Line(ptoA.pos.x, ptoA.pos.y, ptoB.pos.x, ptoB.pos.y)
+
+    Else
+        draw.LineStyle = Line.Dot
+        draw.Foreground = Color.Pink
+
+        draw.Line(ptoA.pos.x, ptoA.pos.y, ptoB.pos.x, ptoB.pos.y)
+
+    Endif
+    draw.End
+
+End
+
+Public Function informacion() As String
+
+    Dim texto As String
+    Dim caracter_separador As String = "\n"
+
+    texto = Str$(ptoAindice) & caracter_separador
+    texto &= Str$(orgA) & caracter_separador
+    texto &= Str$(ptoBindice) & caracter_separador
+    texto &= Str$(orgB) & caracter_separador
+
+    Return texto
+
+End
+
+Public Sub dentro(x As Integer, y As Integer) As ClassConexion 'me devuelve a mi mismo o nulo sino esta dentro el click
+
+    Dim mediaX, mediaY As Float
+
+    mediax = (ptoA.pos.x + ptoB.pos.x) / 2
+    mediay = (ptoA.pos.y + ptoB.pos.y) / 2
+
+    If x < (mediax + 5) And x > (mediax - 5) And y < (mediay + 5) And y > (mediay - 5) Then
+        Return Me
+    Else
+        Return Null
+    Endif
+
+End
