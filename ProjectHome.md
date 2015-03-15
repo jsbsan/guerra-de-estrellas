@@ -1,0 +1,1 @@
+Es un juego de conquista de planetas realizado en gambas3
